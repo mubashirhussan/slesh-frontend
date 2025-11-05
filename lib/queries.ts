@@ -1,0 +1,25 @@
+import { groq } from "next-sanity";
+
+// Landing page
+export const landingQuery = groq`{
+	"hero": *[_type == "hero"][0]{ title, subtitle, ctaText, ctaHref },
+	"features": *[_type == "feature"] | order(order asc){ title, description, icon },
+	"about": *[_type == "about"][0]{ title, body },
+	"pricing": *[_type == "pricingTier"] | order(order asc){ name, price, interval, features, highlight },
+	"posts": *[_type == "post"] | order(publishedAt desc)[0...3]{ title, slug, excerpt, publishedAt }
+}`;
+
+// Blog
+export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){ title, slug, excerpt, publishedAt }`;
+export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
+export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+	title,
+	slug,
+	publishedAt,
+	body
+}`;
+
+// Pricing page (if separate)
+export const pricingQuery = groq`*[_type == "pricingTier"] | order(order asc){ name, price, interval, features, highlight }`;
+
+
