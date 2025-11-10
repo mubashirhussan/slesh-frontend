@@ -11,6 +11,7 @@ import type { Post, FAQItem, CallToActionCard, HighlightCta } from "@/types/sani
 import Link from "next/link";
 import TableOfContents from "@/components/shared/TableOfContents";
 import CtaCard from "@/components/shared/CtaCard";
+import PostBottomButtons from "@/components/shared/PostBottomButtons";
 
 export const revalidate = 120; // ISR: regenerate every 2 minutes
 
@@ -267,6 +268,7 @@ const headings =
       })),
     };
   }
+  
   return (
     <main className="mx-auto max-w-6xl px-4 py-16 flex gap-12">
         {/* 🧠 JSON-LD Structured Data */}
@@ -337,8 +339,9 @@ const headings =
         </div>
       )}
 
+<PostBottomButtons postTitle={post.title} />
       {/* FAQ Section */}
-      {post.faq && post.faq.length > 0 && (
+      {/* {post.faq && post.faq.length > 0 && (
         <section className="mt-4">
           <h2 className="text-2xl font-semibold mb-4">FAQ</h2>
           {post.faq.map((item: FAQItem, idx: number) => (
@@ -348,22 +351,23 @@ const headings =
             </div>
           ))}
         </section>
-      )}
+      )} */}
 
     
 
       {/* Highlight CTA */}
-      {post.highlightCta && (
-        <section className="mt-12 p-6 bg-black text-white rounded-lg text-center">
-          <h2 className="text-2xl font-bold">{post.highlightCta.headline}</h2>
-          <a
-            href={post.highlightCta.buttonUrl}
-            className="inline-block mt-4 px-6 py-3 bg-white text-black font-semibold rounded hover:bg-zinc-200"
-          >
-            {post.highlightCta.buttonText}
-          </a>
-        </section>
-      )}
+     {post.highlightCta && (
+  <section className="mt-12 p-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-center">
+    <h2 className="text-xl font-bold">{post.highlightCta.headline}</h2>
+    <a
+      href={post.highlightCta.buttonUrl}
+      className="inline-block mt-4 px-6 py-2 bg-white text-[#005BB5] font-bold rounded hover:bg-zinc-200"
+    >
+      {post.highlightCta.buttonText}
+    </a>
+  </section>
+)}
+
  </article>
 
     </main>
