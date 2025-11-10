@@ -168,9 +168,60 @@ export default async function PostPage({
   },
 };
 
-
+ // 🔹 JSON-LD Data: Article schema
+  const jsonLd: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription || "",
+    image: post.mainImage ? urlFor(post.mainImage).width(800).url() : undefined,
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt || post._createdAt,
+    author: {
+      "@type": "Person",
+      name: post.author?.name || "Unknown Author",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "KDAC Blogs",
+      logo: {
+        "@type": "ImageObject",
+        url: "/logo.png", // 🔸 replace with your actual logo URL
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://slesh-ai-frontend.vercel.app/blog/${slug}`,
+    },
+  };
+ // 🔹 Add FAQ schema if available
+  let faqJsonLd: Record<string, any> | null = null;
+  if (post.faq && post.faq.length > 0) {
+    faqJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: post.faq.map((item: FAQItem) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    };
+  }
   return (
     <main className="mx-auto max-w-3xl px-4 py-16">
+        {/* 🧠 JSON-LD Structured Data */}
+      <script type="application/ld+json" suppressHydrationWarning>
+        {JSON.stringify(jsonLd)}
+      </script>
+
+      {faqJsonLd && (
+        <script type="application/ld+json" suppressHydrationWarning>
+          {JSON.stringify(faqJsonLd)}
+        </script>
+      )}
       <h1 className="text-3xl font-semibold text-black dark:text-white">{post.title}</h1>
 
       {/* Date */}
