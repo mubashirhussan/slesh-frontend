@@ -7,8 +7,10 @@ import { sanityClient } from "@/lib/sanity.client";
 import { postBySlugQuery, postSlugsQuery } from "@/lib/queries";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { urlFor } from "@/hooks/ImageBuilder";
-import type { Post, FAQItem, CtaCard, HighlightCta } from "@/types/sanity";
+import type { Post, FAQItem, CallToActionCard, HighlightCta } from "@/types/sanity";
 import Link from "next/link";
+import TableOfContents from "@/components/shared/TableOfContents";
+import CtaCard from "@/components/shared/CtaCard";
 
 export const revalidate = 120; // ISR: regenerate every 2 minutes
 
@@ -69,7 +71,9 @@ export default async function PostPage({
 
   //  PortableText custom components
 
-
+const filteredBody = post.body?.filter(
+  (block: any) => block._type === "block" && block.children.some((c: any) => c.text.trim() !== "")
+) || [];
  const myPortableTextComponents: PortableTextComponents = {
   types: {
     // 🖼️ Handle inline or block images
@@ -134,17 +138,62 @@ export default async function PostPage({
 
   block: {
     // 🏷️ Headings
-    h1: ({ children }) => (
-      <h1 className="text-4xl font-bold mt-10 mb-4 text-black dark:text-white">{children}</h1>
-    ),
-    h2: ({ children }) => (
-      <h2 className="text-3xl font-semibold mt-8 mb-3 text-black dark:text-white">{children}</h2>
-    ),
-    h3: ({ children }) => (
-      <h3 className="text-2xl font-semibold mt-6 mb-2 text-black dark:text-white">{children}</h3>
-    ),
+    h1: ({ children, value }: any) => (
+    <h1
+      id={value._key}
+      className="text-4xl font-bold mt-10 mb-4 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h1>
+  ),
+  h2: ({ children, value }: any) => (
+    <h2
+      id={value._key}
+      className="text-3xl font-semibold mt-8 mb-3 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h2>
+  ),
+  h3: ({ children, value }: any) => (
+    <h3
+      id={value._key}
+      className="text-2xl font-semibold mt-6 mb-2 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h3>
+  ),
+  h4: ({ children, value }: any) => (
+    <h4
+      id={value._key}
+      className="text-xl font-semibold mt-4 mb-2 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h4>
+  ),
+  h5: ({ children, value }: any) => (
+    <h5
+      id={value._key}
+      className="text-lg font-medium mt-3 mb-1 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h5>
+  ),
+  h6: ({ children, value }: any) => (
+    <h6
+      id={value._key}
+      className="text-base font-medium mt-2 mb-1 text-black dark:text-white"
+      style={{ scrollMarginTop: "100px" }}
+    >
+      {children}
+    </h6>
+  ),
     normal: ({ children }) => (
-      <p className="text-base leading-7 text-gray-800 dark:text-gray-300 my-4">{children}</p>
+      <p className="text-base leading-7 text-gray-800 dark:text-gray-300 my-4" >{children}</p>
     ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-zinc-400 pl-4 italic text-zinc-600 dark:text-zinc-300 my-4">
@@ -167,7 +216,15 @@ export default async function PostPage({
     number: ({ children }) => <li className="leading-6">{children}</li>,
   },
 };
-
+// 🔹 Extract h2/h3 headings from PortableText content
+const headings =
+  post.body
+    ?.filter((block: any) => block.style === "h2" || block.style === "h3")
+    ?.map((block: any) => ({
+      text: block.children?.[0]?.text || "",
+      level: block.style,
+      id: block._key,
+    })) || [];
  // 🔹 JSON-LD Data: Article schema
   const jsonLd: Record<string, any> = {
     "@context": "https://schema.org",
@@ -211,7 +268,7 @@ export default async function PostPage({
     };
   }
   return (
-    <main className="mx-auto max-w-3xl px-4 py-16">
+    <main className="mx-auto max-w-6xl px-4 py-16 flex gap-12">
         {/* 🧠 JSON-LD Structured Data */}
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(jsonLd)}
@@ -222,6 +279,29 @@ export default async function PostPage({
           {JSON.stringify(faqJsonLd)}
         </script>
       )}
+
+       {/* 🧭 Table of Contents */}
+  {headings.length > 0 && (
+    <aside className="hidden lg:block w-1/4 sticky top-24 self-start h-fit">
+        {/* table of contents */}
+            <div className="bg-[#F9F9F9] rounded-lg p-6 hidden lg:block">
+              <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
+              <div className="max-h-[calc(100vh-40rem)] overflow-y-auto">
+             <TableOfContents headings={headings} />
+              </div>
+            </div>
+             <div className="bg-[#F9F9F9] rounded-lg mt-6 p-6 hidden lg:block">
+              <h2 className="text-lg  font-semibold mb-4">{post.ctaCard?.headline}</h2>
+              <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
+             <CtaCard ctaInfo={post.ctaCard} />
+              </div>
+              
+            </div>
+      
+    </aside>
+  )}
+ <article className="flex-1 max-w-3xl">
+
       <h1 className="text-3xl font-semibold text-black dark:text-white">{post.title}</h1>
 
       {/* Date */}
@@ -234,7 +314,9 @@ export default async function PostPage({
           })}
         </p>
       )}
-
+ {/* <p className="text-sm text-zinc-700 dark:text-zinc-300">
+      By <span className="font-medium">{post.author?.name}</span>
+    </p> */}
       {/* Main Image */}
       {post.mainImage && (
         <div className="mt-6">
@@ -251,13 +333,13 @@ export default async function PostPage({
       {/* Body Content */}
       {post.body && (
         <div className="prose prose-zinc mt-8 dark:prose-invert">
-          <PortableText value={post.body} components={myPortableTextComponents} />
+          <PortableText value={filteredBody} components={myPortableTextComponents} />
         </div>
       )}
 
       {/* FAQ Section */}
       {post.faq && post.faq.length > 0 && (
-        <section className="mt-12">
+        <section className="mt-4">
           <h2 className="text-2xl font-semibold mb-4">FAQ</h2>
           {post.faq.map((item: FAQItem, idx: number) => (
             <div key={idx} className="mb-4">
@@ -268,19 +350,7 @@ export default async function PostPage({
         </section>
       )}
 
-      {/* CTA Card */}
-      {post.ctaCard && (
-        <section className="mt-12 p-6 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
-          <h2 className="text-xl font-semibold">{post.ctaCard.headline}</h2>
-          <p className="mt-2">{post.ctaCard.description}</p>
-          <a
-            href={post.ctaCard.buttonUrl}
-            className="inline-block mt-4 px-4 py-2 bg-black text-white rounded hover:bg-zinc-900"
-          >
-            {post.ctaCard.buttonText}
-          </a>
-        </section>
-      )}
+    
 
       {/* Highlight CTA */}
       {post.highlightCta && (
@@ -294,6 +364,8 @@ export default async function PostPage({
           </a>
         </section>
       )}
+ </article>
+
     </main>
   );
 }

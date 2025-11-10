@@ -25,14 +25,35 @@ export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)][]
 export const postBySlugQuery = groq`
 *[_type == "post" && slug.current == $slug][0]{
   title,
-  slug,
-  publishedAt,
-  body,
-   mainImage {
-    asset->{
-      url
-    }
-  }
+            body,
+            mainImage { asset->{ url } },
+            publishedAt,
+            author->{ name, image { asset->{url} } },
+            metaTitle,
+            metaDescription,
+            highlightCta{
+              headline,
+              buttonText,
+              buttonUrl,
+            },
+            ctaCard {
+              headline,
+              description,
+              buttonText,
+              buttonUrl,
+            },
+            relatedPosts[]->{
+              title,
+              slug,
+              body,
+              mainImage { asset->{ url } },
+              publishedAt,
+              author->{ name, image { asset->{url} } }
+            },
+            faq[]{ 
+              question, 
+              answer 
+            } 
 }
 `;
 

@@ -43,7 +43,7 @@ export interface FAQItem {
   question: string;
   answer: string;
 }
-export interface CtaCard {
+export interface CallToActionCard {
   headline: string;
   description: string;
   buttonText: string;
