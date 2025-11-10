@@ -15,7 +15,7 @@ export default async function BlogPage() {
 				{(posts?.length ? posts : []).map((p) => (
 					<Link key={p.slug?.current} href={`/blog/${p.slug?.current}`} className="rounded-2xl border border-zinc-200 p-6 hover:border-black dark:border-zinc-800 dark:hover:border-white">
 						<div className="text-lg font-medium text-black dark:text-white">{p.title}</div>
-						<p className="mt-2 line-clamp-3 text-zinc-600 dark:text-zinc-400">{p.excerpt}</p>
+						<p className="mt-2 line-clamp-3 text-zinc-600 dark:text-zinc-400">{p.metaDescription}</p>
 					</Link>
 				))}
 			</div>

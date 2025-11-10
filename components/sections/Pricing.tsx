@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { PricingTier } from "@/types/sanity";
 
 export default function Pricing({ tiers = [] as PricingTier[] }: { tiers?: PricingTier[] }) {
@@ -10,7 +11,7 @@ export default function Pricing({ tiers = [] as PricingTier[] }: { tiers?: Prici
 						<div className="text-lg font-medium text-black dark:text-white">{t?.name || `Plan ${i + 1}`}</div>
 						<div className="mt-2 text-3xl font-semibold">{t?.price ?? (i + 1) * 10}<span className="text-base font-normal text-zinc-600 dark:text-zinc-400">/{t?.interval || "mo"}</span></div>
 						<ul className="mt-4 space-y-2 text-zinc-600 dark:text-zinc-400">
-							{(t?.features?.length ? t.features : ["Feature A", "Feature B", "Feature C"]).map((f, idx) => (
+							{(t?.features?.length ? t.features : ["Feature A", "Feature B", "Feature C"]).map((f:any, idx:any) => (
 								<li key={idx}>{f}</li>
 							))}
 						</ul>
