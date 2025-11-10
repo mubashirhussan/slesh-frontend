@@ -9,7 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "^16.0.1",
+    "@portabletext/react": "^5.0.0",
+    "@sanity/block-content-to-markdown": "^1.0.0",
+    "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^7.12.1",
+    "@sanity/image-url": "^1.2.0",
+    "@types/mdx": "^2.0.13",
     "groq": "^4.13.0",
     "next": "16.0.1",
     "next-sanity": "^11.6.5",

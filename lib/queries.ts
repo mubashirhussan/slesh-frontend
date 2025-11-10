@@ -10,14 +10,32 @@ export const landingQuery = groq`{
 }`;
 
 // Blog
-export const postsQuery = groq`*[_type == "post"] | order(publishedAt desc){ title, slug, excerpt, publishedAt }`;
-export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
-export const postBySlugQuery = groq`*[_type == "post" && slug.current == $slug][0]{
-	title,
-	slug,
-	publishedAt,
-	body
+export const postsQuery =  groq`
+*[_type == "post"] | order(_createdAt desc){
+  title,
+  slug,
+  body,
+  mainImage {
+    asset->{
+      url
+    }
+  }
 }`;
+export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
+export const postBySlugQuery = groq`
+*[_type == "post" && slug.current == $slug][0]{
+  title,
+  slug,
+  publishedAt,
+  body,
+   mainImage {
+    asset->{
+      url
+    }
+  }
+}
+`;
+
 
 // Pricing page (if separate)
 export const pricingQuery = groq`*[_type == "pricingTier"] | order(order asc){ name, price, interval, features, highlight }`;

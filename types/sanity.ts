@@ -1,3 +1,6 @@
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { PortableTextBlock } from "next-sanity";
+
 export type Hero = {
 	title?: string;
 	subtitle?: string;
@@ -23,14 +26,84 @@ export type PricingTier = {
 	features?: string[];
 	highlight?: boolean;
 };
+export interface Author {
+  _id: string;
+  name: string;
+  slug?: { current: string };
+  image?: SanityImageSource;
+}
 
-export type Post = {
-	title?: string;
-	slug?: { current?: string };
-	excerpt?: string;
-	publishedAt?: string;
-	body?: unknown;
-};
+export interface Category {
+  _id: string;
+  title: string;
+  slug?: { current: string };
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+export interface CtaCard {
+  headline: string;
+  description: string;
+  buttonText: string;
+  buttonUrl: string;
+}
+
+export interface HighlightCta {
+  headline: string;
+  buttonText: string;
+  buttonUrl: string;
+}
+export interface CTACard {
+  headline: string;
+  description: string;
+  buttonText: string;
+  buttonUrl: string;
+}
+
+export interface HighlightCTA {
+  headline: string;
+  buttonText: string;
+  buttonUrl: string;
+}
+export interface Post {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+
+  title: string;
+  slug: { current: string };
+  author?: Author;
+  mainImage?: {
+    asset: { _ref: string; _type: string };
+    hotspot?: { x: number; y: number; height: number; width: number };
+  };
+  categories?: Category[];
+  publishedAt?: string;
+  body?: PortableTextBlock[];
+  relatedPosts?: { _ref: string }[]; // Reference to other posts
+
+  // --- SEO Fields ---
+  metaTitle?: string;
+  metaDescription?: string;
+  faq?: FAQItem[];
+
+  // --- CTA Card ---
+  ctaCard?: CTACard;
+
+  // --- Highlight CTA ---
+  highlightCta?: HighlightCTA;
+
+  // --- Other SEO & Social ---
+  seoTags?: string[];
+  canonicalUrl?: string;
+  openGraphImage?: {
+    asset: { _ref: string; _type: string };
+    hotspot?: { x: number; y: number; height: number; width: number };
+  };
+  twitterCardType?: 'summary' | 'summary_large_image';
+}
 
 export type LandingData = {
 	hero?: Hero;
