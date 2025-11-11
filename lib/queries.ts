@@ -11,16 +11,24 @@ export const landingQuery = groq`{
 
 // Blog
 export const postsQuery =  groq`
-*[_type == "post"] | order(_createdAt desc){
-  title,
-  slug,
-  body,
-  mainImage {
-    asset->{
-      url
-    }
-  }
-}`;
+*[_type == "post"] | order(_createdAt desc) {
+      title,
+      slug,
+      body,
+      mainImage { asset->{ url } },
+      publishedAt,
+      author->{
+        name,
+        image {
+          asset->{url}
+        }
+      },
+      categories[]->{
+        title,
+        slug
+      }
+    }`;
+    export const postCategoryQuery = groq`*[_type == "category"]{title, slug}`
 export const postSlugsQuery = groq`*[_type == "post" && defined(slug.current)][].slug.current`;
 export const postBySlugQuery = groq`
 *[_type == "post" && slug.current == $slug][0]{
