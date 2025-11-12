@@ -38,7 +38,7 @@ export default function StudentsHero() {
       <div className="page-container">
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl  p-8 md:p-16">
           <div className="z-10 text-center">
-            <h1 className="mb-5 text-center text-3xl font-medium text-black sm:text-4xl md:text-5xl lg:text-6xl">
+            <h1 className="mb-4 text-4xl font-bold text-[color:var(--color-primary)] md:text-5xl">
               Slesh for Students
             </h1>
             <p className="mx-auto mb-6 max-w-xl text-center text-gray-500">
