@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -7,36 +8,44 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
+    <header className="sticky top-0 z-40 w-full py-3 border-zinc-200 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
         {/* Left: Logo */}
-        <Link href="/" className="font-semibold text-lg">
-          Slesh
+       <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/sleshLogo.svg" //  image in public folder
+            alt="Slesh Logo"
+            width={74}
+            height={74}
+            className="rounded-sm"
+            priority
+          />
+       
         </Link>
 
         {/* Center: Menu (hidden on mobile) */}
         <nav className="hidden md:flex gap-6">
           <Link
             href="/#features"
-            className="text-zinc-700 text-md hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] text-md hover:text-black text dark:text-zinc-300 dark:hover:text-white"
           >
             Features
           </Link>
 		  <Link
             href="/pricing"
-            className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
           >
             Pricing
           </Link>
           <Link
             href="/blog"
-            className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
           >
             Blog
           </Link>
           <Link
             href="/students"
-            className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
           >
             Students
           </Link>
@@ -45,19 +54,19 @@ export default function Navbar() {
   prefetch={false}
   target="_blank"
   rel="noopener noreferrer"
-  className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+  className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
 >
   Docs
 </Link>
 		     <Link
             href="/careers"
-            className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
           >
             Careers
           </Link>
 		       <Link
             href="/account"
-            className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+            className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
           >
             Account
           </Link>
@@ -65,9 +74,29 @@ export default function Navbar() {
 
         {/* Right: Add to Chrome button (always visible on mobile & desktop) */}
         <div className="flex items-center gap-2">
-          <button className="rounded-full bg-black text-white px-4 py-2 text-sm hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
-            Add to Chrome
-          </button>
+  
+
+<button
+  className="relative flex items-center cursor-pointer gap-2 overflow-hidden rounded-full bg-black text-white px-4 py-2 text-sm transition-all duration-500 dark:bg-white dark:text-black group"
+>
+  {/* Animated gradient overlay */}
+  <span className="absolute inset-0 bg-gradient-to-r from-[#0052ff] to-[#0052ff] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+
+  {/* Chrome Icon + Text */}
+  <span className="relative flex items-center gap-2 z-10">
+    <Image
+      src="/chrome-icon.svg"
+      alt="Chrome"
+      width={16}
+      height={16}
+      className="object-contain"
+    />
+    Add to Chrome
+  </span>
+</button>
+
+
+
 
           {/* Hamburger menu (visible only on mobile) */}
           <button
@@ -126,7 +155,7 @@ export default function Navbar() {
   onClick={() => setOpen(false)}
   target="_blank"
   rel="noopener noreferrer"
-  className="text-zinc-700 hover:text-black dark:text-zinc-300 dark:hover:text-white"
+  className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
 >
   Docs
 </Link>
