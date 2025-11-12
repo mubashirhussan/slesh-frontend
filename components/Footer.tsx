@@ -4,8 +4,8 @@ export default function Footer() {
 			<div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 md:flex-row">
 				<p>© {new Date().getFullYear()} Slesh. All rights reserved.</p>
 				<div className="flex gap-5">
-					<a href="#" className="hover:text-black dark:hover:text-white">Privacy</a>
-					<a href="#" className="hover:text-black dark:hover:text-white">Terms</a>
+					<a href="#" className="transition-colors hover:text-[color:var(--color-primary)] dark:hover:text-[color:var(--color-primary)]">Privacy</a>
+					<a href="#" className="transition-colors hover:text-[color:var(--color-primary)] dark:hover:text-[color:var(--color-primary)]">Terms</a>
 				</div>
 			</div>
 		</footer>

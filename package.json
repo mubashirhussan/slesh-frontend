@@ -18,6 +18,7 @@
     "@sanity/client": "^7.12.1",
     "@sanity/image-url": "^1.2.0",
     "@types/mdx": "^2.0.13",
+    "framer-motion": "^12.23.24",
     "groq": "^4.13.0",
     "lucide-react": "^0.553.0",
     "next": "16.0.1",
@@ -27,11 +28,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/gsap": "^1.20.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.1",
+    "gsap": "^3.13.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

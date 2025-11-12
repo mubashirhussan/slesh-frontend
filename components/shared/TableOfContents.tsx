@@ -38,16 +38,16 @@ export default function TableOfContents({ headings }: { headings: { id: string; 
 
 
   return (
-    <nav className="sticky top-24 h-fit text-sm space-y-2">
+    <nav className="sticky top-24 h-fit space-y-2 text-sm">
       {headings.map((h) => (
         <a
           key={h.id}
           href={`#${h.id}`}
           className={`block transition-colors ${
             activeId === h.id
-              ? "text-black dark:text-white-400 font-semibold"
-              : "text-gray-500 dark:text-gray-400"
-          } hover:text-black dark:hover:text-white`}
+              ? "font-semibold text-[color:var(--color-primary)]"
+              : "text-gray-500"
+          } hover:text-[color:var(--color-primary)]`}
         >
           {h.text}
         </a>

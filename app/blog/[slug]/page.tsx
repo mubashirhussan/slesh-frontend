@@ -102,16 +102,16 @@ const filteredBody = post.body?.filter(
     ),
 
     // 🔖 Handle callouts or custom block types
-    callout: ({ value }: { value: any }) => (
-      <div className="p-4 my-4 border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 rounded">
-        <p className="text-blue-800 dark:text-blue-100">{value?.text}</p>
+     callout: ({ value }: { value: any }) => (
+       <div className="my-4 rounded border-l-4 border-[color:var(--color-primary)] bg-[color:var(--color-primary-muted)] p-4 dark:bg-blue-900/20">
+         <p className="text-[color:var(--color-primary)] dark:text-blue-100">{value?.text}</p>
       </div>
     ),
   },
 
   marks: {
     // 🔗 Hyperlinks
-    link: ({ children, value }: { children: React.ReactNode; value?: any }) => {
+     link: ({ children, value }: { children: React.ReactNode; value?: any }) => {
       const href = value?.href || "#";
       const isExternal = href.startsWith("http");
       return (
@@ -119,7 +119,7 @@ const filteredBody = post.body?.filter(
           href={href}
           target={isExternal ? "_blank" : "_self"}
           rel={isExternal ? "noopener noreferrer" : undefined}
-          className="text-blue-600 underline hover:text-blue-800 dark:text-blue-400"
+           className="text-[color:var(--color-primary)] underline hover:opacity-80"
         >
           {children}
         </Link>
@@ -357,7 +357,7 @@ const headings =
 
       {/* Highlight CTA */}
      {post.highlightCta && (
-  <section className="mt-12 p-8 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg text-center">
+   <section className="mt-12 rounded-lg bg-gradient-to-r from-[color:var(--color-primary)] to-[#003bbd] p-8 text-center text-white">
     <h2 className="text-xl font-bold">{post.highlightCta.headline}</h2>
     <a
       href={post.highlightCta.buttonUrl}

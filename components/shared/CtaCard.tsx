@@ -10,10 +10,10 @@ const CtaCard: React.FC<CtaCardProps> = ({ ctaInfo }) => {
 
   return (
     <section className="rounded-lg">
-      <p className=" text-black text-md">{ctaInfo.description}</p>
+      <p className="text-md text-[#475467]">{ctaInfo.description}</p>
       <a
         href={ctaInfo.buttonUrl}
-        className="inline-block my-4  w-full text-center  p-2 bg-[#005BB5] text-white rounded hover:bg-blue-600"
+        className="my-4 inline-block w-full rounded bg-[color:var(--color-primary)] p-2 text-center text-white transition hover:bg-[#0042d1]"
       >
         {ctaInfo.buttonText}
       </a>

@@ -55,30 +55,30 @@ const PricingPlans = () => {
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-white py-12">
+      <div className="page-container">
         <div className="text-center">
-         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+         <h2 className="mb-4 text-4xl font-bold text-[color:var(--color-primary)] md:text-5xl">
             Choose Your Plan
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-lg text-gray-600">
            Start free and scale as you grow. Every plan includes our core features with different usage limits.
           </p>
         </div>
 
-        <div className="mt-16 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8">
+        <div className="mt-16 space-y-12 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
           {plans.map((plan, index) => (
             <div 
               key={index} 
-              className={`relative p-8 bg-white rounded-lg shadow-sm border ${
+              className={`relative rounded-3xl border bg-white/90 p-8 shadow-sm transition-transform ${
                 plan.popular 
-                  ? 'border-[#0052FF]  transform scale-105 z-10' 
-                  : 'border-gray-200'
+                  ? 'border-[color:var(--color-primary)] shadow-2xl shadow-[color:var(--color-primary-muted)] scale-105 z-10' 
+                  : 'border-gray-200 hover:-translate-y-2 hover:border-[color:var(--color-primary)] hover:shadow-xl hover:shadow-[color:var(--color-primary-muted)]'
               }`}
             >
               {plan.popular && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <span className="inline-flex items-center px-4 py-1 rounded-lg text-sm font-medium bg-[#0052FF] text-white">
+                  <span className="inline-flex items-center rounded-full bg-[color:var(--color-primary)] px-4 py-1 text-sm font-medium text-white shadow">
                     Most Popular
                   </span>
                 </div>
@@ -97,7 +97,7 @@ const PricingPlans = () => {
                 {plan.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start">
                     <div className="flex-shrink-0">
-                      <svg className="h-6 w-6 text-[#0052FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="h-6 w-6 text-[color:var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
@@ -110,8 +110,8 @@ const PricingPlans = () => {
                 <button
                   className={`w-full py-3 cursor-pointer px-6 rounded-md text-center font-medium ${
                     plan.popular
-                      ? 'bg-[#0052FF] text-white hover:bg-blue-600'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                      ? 'bg-[color:var(--color-primary)] text-white shadow-lg shadow-[color:var(--color-primary-muted)] hover:bg-[#0042d1]'
+                      : 'border border-[color:var(--color-primary)] bg-transparent text-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white'
                   } transition-colors duration-200`}
                 >
                   {plan.cta}

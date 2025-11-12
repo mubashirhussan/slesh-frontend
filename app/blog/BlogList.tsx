@@ -40,9 +40,9 @@ export default function BlogList({ posts, categories }: BlogListProps) {
   };
 
   return (
-    <>
+    <div className="w-full">
       {/* ---------- Category Tabs ---------- */}
-      <div className="flex flex-wrap gap-3 mb-10">
+      <div className="mb-10 flex flex-wrap justify-center gap-3">
         <button
           onClick={() => {
             setSelectedCategory("All");
@@ -50,8 +50,8 @@ export default function BlogList({ posts, categories }: BlogListProps) {
           }}
           className={`rounded-full cursor-pointer border px-4 py-2 text-sm font-medium transition ${
             selectedCategory === "All"
-              ? "bg-black text-white border-black"
-              : "border-gray-300 hover:bg-black hover:text-white"
+              ? "border-[color:var(--color-primary)] bg-[color:var(--color-primary)] text-white shadow"
+              : "border-gray-300 text-[#475467] hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white"
           }`}
         >
           All
@@ -66,8 +66,8 @@ export default function BlogList({ posts, categories }: BlogListProps) {
             }}
             className={`rounded-full cursor-pointer border px-4 py-2 text-sm font-medium transition ${
               selectedCategory === cat.title
-                ? "bg-black text-white border-black"
-                : "border-gray-300 hover:bg-black hover:text-white"
+                ? "border-[color:var(--color-primary)] bg-[color:var(--color-primary)] text-white shadow"
+                : "border-gray-300 text-[#475467] hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white"
             }`}
           >
             {cat.title}
@@ -76,13 +76,13 @@ export default function BlogList({ posts, categories }: BlogListProps) {
       </div>
 
       {/* ---------- Blog Cards ---------- */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {paginatedPosts?.length ? (
           paginatedPosts.map((p) => (
             <Link
               key={p.slug?.current}
               href={`/blog/${p.slug?.current}`}
-              className="group flex flex-col rounded-2xl overflow-hidden border border-gray-200 dark:border-zinc-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 bg-white dark:bg-zinc-900"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)] dark:border-zinc-800 dark:bg-zinc-900"
             >
               {p.mainImage && (
                 <div className="relative w-full h-56 flex-shrink-0">
@@ -97,7 +97,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
 
               <div className="flex flex-col justify-between flex-grow p-6">
                 <div>
-                  <h2 className="text-xl font-semibold text-black dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition line-clamp-2 min-h-[3.5rem]">
+                  <h2 className="min-h-[3.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)] dark:text-white dark:group-hover:text-[color:var(--color-primary)]">
                     {p.title}
                   </h2>
                   <p className="mt-3 text-gray-600 dark:text-zinc-400 line-clamp-3 min-h-[4.5rem]">
@@ -105,7 +105,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100 dark:border-zinc-800">
+                <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-zinc-800">
                   {p.author && (
                     <div className="flex items-center gap-2">
                       {/* {p.author.image?.asset?.url && (
@@ -122,7 +122,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                       </span>
                     </div>
                   )}
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-[#667085]">
                     {p.publishedAt
                       ? new Date(p.publishedAt).toLocaleDateString("en-US", {
                           month: "short",
@@ -142,15 +142,15 @@ export default function BlogList({ posts, categories }: BlogListProps) {
 
       {/* ---------- Pagination ---------- */}
       {totalPages > 1 && (
-        <div className="flex justify-center mt-12 gap-2">
+        <div className="mt-12 flex justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
               onClick={() => changePage(i + 1)}
               className={`h-10 cursor-pointer w-10 rounded-full text-sm font-medium border transition ${
                 currentPage === i + 1
-                  ? "bg-black text-white border-black"
-                  : "border-gray-300 text-gray-700 hover:bg-black hover:text-white"
+                  ? "border-[color:var(--color-primary)] bg-[color:var(--color-primary)] text-white"
+                  : "border-gray-300 text-[#475467] hover:border-[color:var(--color-primary)] hover:bg-[color:var(--color-primary)] hover:text-white"
               }`}
             >
               {i + 1}
@@ -158,6 +158,6 @@ export default function BlogList({ posts, categories }: BlogListProps) {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
