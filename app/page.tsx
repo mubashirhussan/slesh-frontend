@@ -17,7 +17,7 @@ export default async function Home() {
       <Hero data={data?.hero} />
       <Features items={data?.features} />
       <About data={data?.about} />
-      <Pricing tiers={data?.pricing} />
+      <Pricing  />
       <BlogPreview posts={data?.posts} />
     </main>
   );
