@@ -19,6 +19,7 @@
     "@sanity/image-url": "^1.2.0",
     "@types/mdx": "^2.0.13",
     "groq": "^4.13.0",
+    "lucide-react": "^0.553.0",
     "next": "16.0.1",
     "next-sanity": "^11.6.5",
     "react": "19.2.0",
