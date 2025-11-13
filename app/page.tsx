@@ -24,11 +24,10 @@ export default async function Home() {
       <About data={data?.about} />
       <Pricing  />
       <BlogPreview posts={data?.posts} /> */}
-       <HeroSection />
+      <HeroSection />
       <FeaturesSection />
       <DataSection />
       <FAQSection />
-      <Footer />
     </main>
   );
 }

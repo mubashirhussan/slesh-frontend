@@ -14,18 +14,21 @@ export default async function BlogPage() {
 
   return (
     <main className="pt-12">
-		<div className="page-container">
-      <div className="text-center mb-8">
-   <h1 className="mb-4 text-4xl font-bold text-[color:var(--color-primary)] md:text-5xl">
-        Slesh Resource Hub
-      </h1>
-	 
-		<p className="text-[#475467] max-w-xl mx-auto text-center mb-6">Access the latest insights and news regarding to stay updated with Slesh</p>
-		</div>
-      <div className="">
-        <BlogList posts={posts} categories={categories} />
+      <div className="page-container">
+        <div className="text-center mb-8">
+          <h1 className="mb-4 text-4xl font-bold text-black md:text-5xl">
+            Slesh Resource Hub
+          </h1>
+
+          <p className="text-[#475467] max-w-xl mx-auto text-center mb-6">
+            Access the latest insights and news regarding to stay updated with
+            Slesh
+          </p>
+        </div>
+        <div className="">
+          <BlogList posts={posts} categories={categories} />
+        </div>
       </div>
-    </div>
     </main>
   );
 }

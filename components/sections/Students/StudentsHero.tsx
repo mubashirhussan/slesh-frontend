@@ -38,17 +38,19 @@ export default function StudentsHero() {
       <div className="page-container">
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl  p-8 md:p-16">
           <div className="z-10 text-center">
-            <h1 className="mb-4 text-4xl font-bold text-[color:var(--color-primary)] md:text-5xl">
+            <h1 className="mb-4 text-4xl font-bold text-black md:text-5xl">
               Slesh for Students
             </h1>
             <p className="mx-auto mb-6 max-w-xl text-center text-gray-500">
-              Studying is hard enough. Switching tabs, copy-pasting or screenshots should not add to it.
+              Studying is hard enough. Switching tabs, copy-pasting or
+              screenshots should not add to it.
             </p>
 
             <div className="hero-video my-8 h-[200px] w-full max-w-3xl overflow-hidden rounded-xl border border-gray-200 bg-gray-100 md:h-[360px]">
               {videoError ? (
                 <div className="flex h-full w-full items-center justify-center bg-white text-center text-sm text-[#475467]">
-                  Video coming soon. Please install the extension to see it in action.
+                  Video coming soon. Please install the extension to see it in
+                  action.
                 </div>
               ) : (
                 <video
@@ -74,7 +76,12 @@ export default function StudentsHero() {
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0052ff] to-[#0052ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
                 <span className="relative z-10 flex items-center gap-2">
-                  <Image src="/chrome-icon.svg" alt="Chrome" width={18} height={18} />
+                  <Image
+                    src="/chrome-icon.svg"
+                    alt="Chrome"
+                    width={18}
+                    height={18}
+                  />
                   Add to Chrome
                 </span>
               </Link>
@@ -86,7 +93,9 @@ export default function StudentsHero() {
                 className="group relative flex items-center justify-center overflow-hidden rounded-lg border border-blue-600 bg-transparent px-4 py-2 text-blue-600"
               >
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0052ff] to-[#0052ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
-                <span className="relative z-10 hover:text-white">Apply to be an Ambassador</span>
+                <span className="relative z-10 hover:text-white">
+                  Apply to be an Ambassador
+                </span>
               </Link>
             </div>
           </div>
