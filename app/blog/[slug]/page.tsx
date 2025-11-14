@@ -440,7 +440,7 @@ export default async function PostPage({
 
         {/* Highlight CTA */}
         {post.highlightCta && (
-          <section className="mt-12 rounded-lg bg-gradient-to-r from-[color:var(--color-primary)] to-[#003bbd] p-8 text-center text-white">
+          <section className="mt-12 py-16 rounded-lg bg-gradient-to-r from-[color:var(--color-primary)] to-[#003bbd] p-8 text-center text-white">
             <h2 className="text-xl font-bold">{post.highlightCta.headline}</h2>
             <a
               href={post.highlightCta.buttonUrl}
