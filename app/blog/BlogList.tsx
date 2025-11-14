@@ -57,9 +57,9 @@ export default function BlogList({ posts, categories }: BlogListProps) {
           All
         </button>
 
-        {categories?.map((cat,index) => (
+        {categories?.map((cat, index) => (
           <button
-           key={cat?.slug?.current ?? `${cat?.title}-${index}`}
+            key={cat?.slug?.current ?? `${cat?.title}-${index}`}
             onClick={() => {
               setSelectedCategory(cat.title);
               setCurrentPage(1);
@@ -142,7 +142,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
 
       {/* ---------- Pagination ---------- */}
       {totalPages > 1 && (
-        <div className="mt-12 flex justify-center gap-2">
+        <div className="mt-8 mb-12 flex justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
