@@ -23,7 +23,7 @@ export default function Navbar() {
     <header className="mb-24">
       <nav className="fixed top-0 z-40 w-full py-4 border-zinc-200 bg-white/85 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
         <div className="navbar-grid mx-auto w-full max-w-7xl items-center gap-6 px-4 py-3">
-          <div className="w-40">
+          <div className="md:w-40 w-full">
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/sleshLogo.svg"
@@ -84,13 +84,20 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          <div className="w-40">
+          <div className="flex w-full items-center justify-between md:w-40">
+            {/* Add to Chrome - visible on mobile + desktop center logic */}
             <Link
               href="https://chromewebstore.google.com/detail/slesh-ask-search-automate/ikfopgggdcafagjeflhomdpolhdcfenp?utm_source=Homepage&utm_medium=homepage-cta&utm_campaign=web-conversion-funnel"
               prefetch={false}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative hidden items-center gap-2 overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
+              className="
+      relative 
+      flex items-center justify-center gap-2 
+      overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white 
+      transition-all duration-500 group
+       md:w-auto
+    "
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
               <span className="relative z-10 flex items-center gap-2">
@@ -99,33 +106,34 @@ export default function Navbar() {
                   alt="Chrome"
                   width={16}
                   height={16}
-                  className="object-contain"
                 />
                 Add to Chrome
               </span>
             </Link>
 
+            {/* Hamburger - visible only on mobile */}
             <button
               aria-label="Toggle Menu"
               onClick={() => setOpen(!open)}
-              className="ml-2 flex items-center justify-center rounded-md border border-[color:var(--color-primary)] px-3 py-2 text-sm text-[color:var(--color-primary)] md:hidden"
+              className="ml-3 flex items-center justify-center rounded-md border border-[color:var(--color-primary)] px-3 py-2 text-sm text-[color:var(--color-primary)] md:hidden"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
                 fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
               >
                 {open ? (
                   <path
+                    stroke="currentColor"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M6 18L18 6M6 6l12 12"
                   />
                 ) : (
                   <path
+                    stroke="currentColor"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M4 6h16M4 12h16M4 18h16"
