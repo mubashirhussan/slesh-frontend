@@ -353,11 +353,11 @@ export default async function PostPage({
         {post.mainImage && (
           <div className="mt-6 w-full">
             <Image
-              src={urlFor(post.mainImage).width(800).url()}
+              src={urlFor(post.mainImage).width(400).url()}
               alt={post.title}
               width={1000}
-              height={400}
-              className="rounded-lg"
+              height={200} // intrinsic ratio
+              className="rounded-lg h-96 w-full object-cover"
             />
           </div>
         )}

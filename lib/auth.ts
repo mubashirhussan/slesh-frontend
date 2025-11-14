@@ -1,65 +1,101 @@
+// lib/auth.ts
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { API_ENDPOINT } from "./constant";
 
-// lib/auth.ts
+// import { API_ENDPOINT } from "./constants";
+
 const SUPABASE_URL = "https://app.slesh.ai";
 const SLESH_ENDPOINT = "https://api.slesh.ai";
 const REDIRECT_URL = `${process.env.NEXT_PUBLIC_SITE_URL}/login/callback`;
 const LAST_USED_PROVIDER_KEY = "slesh_last_used_provider";
 
-export function getLastUsedProvider() {
+/* -------------------------------------------------------------------------- */
+/*                              Helper Types                                 */
+/* -------------------------------------------------------------------------- */
+type Provider = "google" | "azure";
+
+// interface SignInCallbacks {
+//   setLoading: (v: boolean) => void;
+//   setSuccess: (v: boolean) => void;
+//   setError: (msg: string | null) => void;
+// }
+
+/* -------------------------------------------------------------------------- */
+/*                         Last‑Used Provider UI Logic                        */
+/* -------------------------------------------------------------------------- */
+export function getLastUsedProvider(): Provider | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem(LAST_USED_PROVIDER_KEY);
+  const val = localStorage.getItem(LAST_USED_PROVIDER_KEY);
+  return val === "google" || val === "azure" ? val : null;
 }
 
-export function setLastUsedProvider(provider: string) {
+export function setLastUsedProvider(provider: Provider): void {
   localStorage.setItem(LAST_USED_PROVIDER_KEY, provider);
 }
 
-export function updateLoginButtonsOrder() {
+/** Re‑order the login buttons on the page based on the last used provider */
+export function updateLoginButtonsOrder(): void {
   const lastUsed = getLastUsedProvider();
   const container = document.getElementById("loginButtons");
   if (!container || !lastUsed) return;
 
-  const googleBtn = container.querySelector(".google-btn");
-  const microsoftBtn = container.querySelector(".microsoft-btn");
+  const googleBtn = container.querySelector(
+    ".google-btn"
+  ) as HTMLElement | null;
+  const microsoftBtn = container.querySelector(
+    ".microsoft-btn"
+  ) as HTMLElement | null;
   if (!googleBtn || !microsoftBtn) return;
 
   container.innerHTML = "";
+
   if (lastUsed === "google") {
     addLastUsedIndicator(googleBtn, "Google");
     container.appendChild(googleBtn);
     container.appendChild(microsoftBtn);
-  } else if (lastUsed === "azure") {
+  } else {
     addLastUsedIndicator(microsoftBtn, "Microsoft");
     container.appendChild(microsoftBtn);
     container.appendChild(googleBtn);
   }
 }
 
-function addLastUsedIndicator(button: Element, name: string) {
+/* -------------------------------------------------------------------------- */
+/*                         Indicator UI Helper                               */
+/* -------------------------------------------------------------------------- */
+function addLastUsedIndicator(button: HTMLElement, name: string): void {
   const indicator = document.createElement("div");
   indicator.className = "last-used-indicator";
   indicator.innerHTML = `<span class="last-used-text">Last used</span>`;
 
-  const content = button.innerHTML;
+  const originalContent = button.innerHTML;
   button.innerHTML = "";
   button.appendChild(indicator);
 
   const wrapper = document.createElement("div");
   wrapper.className = "button-content";
-  wrapper.innerHTML = content;
+  wrapper.innerHTML = originalContent;
   button.appendChild(wrapper);
 
   button.classList.add("last-used-btn");
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                 Sign‑In Flow                               */
+/* -------------------------------------------------------------------------- */
+// lib/auth.ts
+export type SignInCallbacks = {
+  setSuccess: (v: boolean) => void;
+  setError: (msg: string | null) => void;
+};
+
 export async function signIn(
-  provider: "google" | "azure",
-  { setLoading, setSuccess, setError }: any
-) {
+  provider: Provider,
+  { setSuccess, setError }: SignInCallbacks
+): Promise<void> {
   let authWindow: Window | null = null;
+
   try {
     let authUrl = `${SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent(
       REDIRECT_URL
@@ -69,61 +105,77 @@ export async function signIn(
     authWindow = window.open(authUrl, "slesh_auth", "width=500,height=600");
     if (!authWindow) throw new Error("Popup blocked");
 
-    const check = setInterval(async () => {
-      if (authWindow?.closed) {
-        clearInterval(check);
-        setLoading(false);
-        return;
-      }
+    await new Promise<void>((resolve, reject) => {
+      const poll = setInterval(() => {
+        // USER CLOSED POPUP
+        if (authWindow?.closed) {
+          clearInterval(poll);
+          setError("Sign in cancelled."); // Optional: show message
+          resolve(); // This will trigger finally → setLoading(false)
+          return;
+        }
 
-      try {
-        const url = authWindow?.location.href;
-        if (url?.startsWith(REDIRECT_URL)) {
-          clearInterval(check);
+        try {
+          const url = authWindow?.location.href;
+          if (!url || !url.startsWith(REDIRECT_URL)) return;
+
+          clearInterval(poll);
           authWindow?.close();
 
-          const params = new URL(url).hash.slice(1);
-          const searchParams = new URL(url).searchParams;
-          const accessToken =
-            new URLSearchParams(params).get("access_token") ||
-            searchParams.get("access_token");
-          const refreshToken =
-            new URLSearchParams(params).get("refresh_token") ||
-            searchParams.get("refresh_token");
+          const hash = url.split("#")[1] || "";
+          const query = new URL(url).search;
+          const params = new URLSearchParams(hash || query.slice(1));
 
-          if (!accessToken) throw new Error("No access token");
+          const accessToken = params.get("access_token");
+          const refreshToken = params.get("refresh_token");
+
+          if (!accessToken) throw new Error("No access token received");
 
           localStorage.setItem("supabase_access_token", accessToken);
           localStorage.setItem("authToken", accessToken);
           if (refreshToken)
             localStorage.setItem("supabase_refresh_token", refreshToken);
-
           setLastUsedProvider(provider);
-          const user = await getUserInfo(accessToken);
-          if (user) {
-            setSuccess(true);
-            setTimeout(() => {
-              window.location.href = "/account";
-            }, 2000);
-          }
-        }
-      } catch (e) {}
-    }, 100);
 
-    setTimeout(() => {
-      if (authWindow && !authWindow.closed) {
-        authWindow.close();
-        clearInterval(check);
-        setLoading(false);
-        setError("Timeout. Try again.");
-      }
-    }, 300000);
+          getUserInfo(accessToken)
+            .then((user) => {
+              if (user) {
+                setSuccess(true);
+                setTimeout(() => (window.location.href = "/account"), 2000);
+              } else {
+                throw new Error("Failed to fetch user info");
+              }
+            })
+            .catch((err) => {
+              setError(err.message || "Authentication failed");
+              reject(err);
+            })
+            .finally(() => {
+              resolve();
+            });
+        } catch (_) {
+          // ignore cross-origin
+        }
+      }, 100);
+
+      // 5-minute timeout
+      setTimeout(() => {
+        if (authWindow && !authWindow.closed) {
+          authWindow.close();
+          clearInterval(poll);
+          setError("Login timed out. Please try again.");
+          reject(new Error("timeout"));
+        }
+      }, 5 * 60 * 1000);
+    });
   } catch (err: any) {
-    setError(err.message);
-    setLoading(false);
+    setError(err?.message ?? "Sign-in failed");
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/*                         Exchange Supabase token → Slesh user               */
+/* -------------------------------------------------------------------------- */
 async function getUserInfo(token: string) {
   const res = await fetch(`${SLESH_ENDPOINT}/auth/signin`, {
     method: "POST",
@@ -134,10 +186,17 @@ async function getUserInfo(token: string) {
   return data.success ? data.user : null;
 }
 
-export async function checkExistingAuth({ setSuccess, setError }: any) {
-  const token =
-    localStorage.getItem("supabase_access_token") ||
-    localStorage.getItem("authToken");
+/* -------------------------------------------------------------------------- */
+/*                         Auto‑login if token exists                         */
+/* -------------------------------------------------------------------------- */
+export async function checkExistingAuth({
+  setSuccess,
+  setError,
+}: {
+  setSuccess: (v: boolean) => void;
+  setError: (msg: string | null) => void;
+}): Promise<void> {
+  const token = getToken();
   if (!token) return;
 
   const user = await getUserInfo(token);
@@ -147,33 +206,48 @@ export async function checkExistingAuth({ setSuccess, setError }: any) {
   } else {
     localStorage.removeItem("supabase_access_token");
     localStorage.removeItem("authToken");
+    setError("Session expired. Please sign in again."); // Optional: show message
   }
 }
 
-export function resetLoginState() {
+/* -------------------------------------------------------------------------- */
+/*                                 Misc Helpers                               */
+/* -------------------------------------------------------------------------- */
+export function resetLoginState(): void {
   localStorage.clear();
   window.location.reload();
 }
-export function getToken() {
+
+export function getToken(): string | null {
   return (
-    localStorage.getItem("authToken") ||
+    localStorage.getItem("authToken") ??
     localStorage.getItem("supabase_access_token")
   );
 }
 
-export async function fetchWithAuth(url: string, options: RequestInit = {}) {
+/* -------------------------------------------------------------------------- */
+/*                     Authenticated fetch (single export)                   */
+/* -------------------------------------------------------------------------- */
+export async function fetchWithAuth(
+  url: string,
+  options: RequestInit = {}
+): Promise<Response> {
   const token = getToken();
   return fetch(`${API_ENDPOINT}${url}`, {
     ...options,
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
   });
 }
 
-export async function signOut() {
+/* -------------------------------------------------------------------------- */
+/*                                 Sign‑Out                                   */
+/* -------------------------------------------------------------------------- */
+export async function signOut(): Promise<void> {
   localStorage.clear();
+  // optionally call a logout endpoint if you have one
   window.location.href = "/";
 }
