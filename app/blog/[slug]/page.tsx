@@ -17,6 +17,7 @@ import Link from "next/link";
 import TableOfContents from "@/components/shared/TableOfContents";
 import CtaCard from "@/components/shared/CtaCard";
 import PostBottomButtons from "@/components/shared/PostBottomButtons";
+import FAQSection from "../PostFaq";
 
 export const revalidate = 120; // ISR: regenerate every 2 minutes
 
@@ -372,18 +373,70 @@ export default async function PostPage({
         )}
 
         <PostBottomButtons postTitle={post.title} />
-        {/* FAQ Section */}
-        {/* {post.faq && post.faq.length > 0 && (
-        <section className="mt-4">
-          <h2 className="text-2xl font-semibold mb-4">FAQ</h2>
-          {post.faq.map((item: FAQItem, idx: number) => (
-            <div key={idx} className="mb-4">
-              <h3 className="font-medium">{item.question}</h3>
-              <p className="text-zinc-600 dark:text-zinc-400">{item.answer}</p>
+        {post.relatedPosts && post.relatedPosts.length > 0 && (
+          <section className="mt-12">
+            <h2 className="text-2xl font-semibold mb-6">Related Posts</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {post.relatedPosts.map((related, idx) => (
+                <Link
+                  key={related.slug?.current}
+                  href={`/blog/${related.slug?.current}`}
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)] dark:border-zinc-800 dark:bg-zinc-900"
+                >
+                  {related.mainImage && (
+                    <div className="relative w-full h-56 flex-shrink-0">
+                      <Image
+                        src={urlFor(related.mainImage)
+                          .width(800)
+                          .height(400)
+                          .url()}
+                        alt={related.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+
+                  <div className="flex flex-col justify-between flex-grow px-2 py-4">
+                    <div>
+                      <h2 className=" line-clamp-2 min-h-[2.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)] dark:text-white dark:group-hover:text-[color:var(--color-primary)]">
+                        {related.title}
+                      </h2>
+                      <p className="mt-3 text-gray-600 dark:text-zinc-400 line-clamp-2 min-h-[2.5rem]">
+                        {related.body?.[0]?.children?.[0]?.text ??
+                          "Read more..."}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-zinc-800">
+                      {related.author && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-700 dark:text-gray-300">
+                            {related.author.name}
+                          </span>
+                        </div>
+                      )}
+                      <span className="text-sm text-[#667085]">
+                        {related.publishedAt
+                          ? new Date(related.publishedAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )
+                          : "Draft"}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
-          ))}
-        </section>
-      )} */}
+          </section>
+        )}
+        {/* FAQ Section */}
+        {post.faq && post.faq.length > 0 && <FAQSection faqs={post} />}
 
         {/* Highlight CTA */}
         {post.highlightCta && (

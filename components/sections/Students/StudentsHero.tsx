@@ -37,7 +37,7 @@ export default function StudentsHero() {
     <section className="w-full bg-linear-to-br from-blue-100/10 to-purple-100/10">
       <div className="page-container">
         <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl  p-8 md:p-16">
-          <div className="z-10 text-center">
+          <div className="z-10 text-center w-full">
             <h1 className="mb-4 text-4xl font-bold text-black md:text-5xl">
               Slesh for Students
             </h1>
@@ -46,7 +46,7 @@ export default function StudentsHero() {
               screenshots should not add to it.
             </p>
 
-            <div className="hero-video my-8 h-[200px] w-full max-w-3xl overflow-hidden rounded-xl border border-gray-200 bg-gray-100 md:h-[360px]">
+            <div className="hero-video mx-auto my-8 h-[200px] w-full max-w-4xl overflow-hidden rounded-xl border border-gray-200 bg-gray-100 md:h-[500px]">
               {videoError ? (
                 <div className="flex h-full w-full items-center justify-center bg-white text-center text-sm text-[#475467]">
                   Video coming soon. Please install the extension to see it in
@@ -67,7 +67,7 @@ export default function StudentsHero() {
               )}
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap py-4 justify-center gap-4">
               <Link
                 href="https://chromewebstore.google.com/detail/slesh-ask-search-automate/ikfopgggdcafagjeflhomdpolhdcfenp"
                 target="_blank"

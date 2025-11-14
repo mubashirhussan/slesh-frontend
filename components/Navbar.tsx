@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import Image from "next/image";
@@ -8,7 +9,11 @@ import { useEffect, useState } from "react";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname(); // Track current pathname
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("supabase_access_token"));
+  }, []);
   // Scroll to top on pathname change (route navigation)
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,10 +77,10 @@ export default function Navbar() {
               Careers
             </Link>
             <Link
-              href="/account"
+              href={isLoggedIn ? "/account" : "/login"}
               className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
             >
-              Account
+              {isLoggedIn ? "Account" : "Sign In"}
             </Link>
           </nav>
 
@@ -178,6 +183,13 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
               >
                 Career
+              </Link>
+              <Link
+                className="text-[#475467] transition hover:text-[color:var(--color-primary)]"
+                href="/login"
+                onClick={() => setOpen(false)}
+              >
+                Account
               </Link>
             </div>
           </div>

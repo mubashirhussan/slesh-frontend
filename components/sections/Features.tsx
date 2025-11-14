@@ -115,6 +115,9 @@ export default function FeaturesSection() {
       className="flex  flex-col gap-32 py-24  mx-auto px-20"
       id="features"
     >
+      <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
+        Features
+      </h2>
       {features.map((f, idx) => (
         <div
           key={idx}
