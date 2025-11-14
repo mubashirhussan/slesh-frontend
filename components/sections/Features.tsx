@@ -111,7 +111,10 @@ export default function FeaturesSection() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-32 py-24  mx-auto px-20">
+    <section
+      className="flex  flex-col gap-32 py-24  mx-auto px-20"
+      id="features"
+    >
       {features.map((f, idx) => (
         <div
           key={idx}

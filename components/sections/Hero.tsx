@@ -107,16 +107,21 @@ export default function HeroSection() {
 
           <div className="flex gap-6 justify-center flex-wrap">
             {/* Explore Button */}
-            <button className="group relative bg-white text-black px-8 py-3 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
-              {/* text stays above */}
-              <span className="relative z-10  text-md font-semibold">
-                Explore{" "}
-                <span className="font-serif text-md font-semibold">Slesh</span>
-              </span>
 
-              {/* sliding gradient layer */}
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-            </button>
+            <Link href="/#features" scroll={true}>
+              <button className="group relative cursor-pointer bg-white hover:text-white text-black px-8 py-3 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
+                {/* text stays above */}
+                <span className="relative z-10  text-md font-semibold">
+                  Explore{" "}
+                  <span className="font-serif text-md font-semibold">
+                    Slesh
+                  </span>
+                </span>
+
+                {/* sliding gradient layer */}
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+              </button>
+            </Link>
 
             {/* Add to Chrome Button */}
             <Link

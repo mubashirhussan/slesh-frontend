@@ -53,7 +53,7 @@ const PricingPlans = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white py-12">
+    <div className="min-h-screen bg-white py-12 ">
       <div className="page-container">
         <div className="text-center">
           <h2 className="mb-4 text-4xl font-bold text-black md:text-5xl">
