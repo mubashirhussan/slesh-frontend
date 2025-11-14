@@ -135,12 +135,6 @@ const PricingPlans = () => {
             </div>
           ))}
         </div>
-
-        <div className="mt-16 text-center">
-          <p className="text-gray-600">
-            All plans include a 14-day free trial. No credit card required.
-          </p>
-        </div>
       </div>
     </div>
   );
