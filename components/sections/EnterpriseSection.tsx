@@ -29,7 +29,7 @@ export default function EnterpriseSection() {
       <div className="max-w-5xl mx-auto px-6">
         <div
           ref={contentRef}
-          className="text-center opacity-0 translate-y-12 transition-all duration-700"
+          className="text-center opacity-0  transition-all duration-700"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-6">
             Enterprise Solutions
