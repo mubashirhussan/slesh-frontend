@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer
-      className="relative w-full h-[600px] p-[14px] rounded-[40px] overflow-hidden bg-red-200"
+      className="relative w-full h-[600px]  overflow-hidden"
       style={{ height: "500px" }}
     >
       {/* Forced height with !important, red background for visibility */}
