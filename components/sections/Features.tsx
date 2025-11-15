@@ -115,7 +115,7 @@ export default function FeaturesSection() {
           const buttons = sidebar.querySelectorAll("button");
           gsap.from(buttons, {
             x: 50,
-            opacity: 0,
+            opacity: 1,
             duration: 0.8,
             ease: "power3.out",
             stagger: 0.15,
@@ -131,8 +131,9 @@ export default function FeaturesSection() {
 
   return (
     <section
-      className="flex  flex-col gap-32 py-24  mx-auto px-20"
+      className="flex flex-col gap-32 py-24 mx-auto px-20"
       id="features"
+      style={{ overflow: "visible" }}
     >
       <h2 className="text-4xl font-bold text-center text-gray-900">Features</h2>
       {features.map((f, idx) => (
@@ -144,7 +145,8 @@ export default function FeaturesSection() {
               : idx % 2 === 1
               ? "w-full md:w-1/2 items-center"
               : "w-full md:w-1/2 md:ml-auto items-center"
-          } ${idx === 1 ? "relative" : ""}`}
+          } ${idx === 1 ? "relative overflow-visible" : ""}`}
+          style={idx === 1 ? { overflow: "visible", height: "auto" } : {}}
         >
           {/* Text Content */}
           <div
@@ -187,6 +189,7 @@ export default function FeaturesSection() {
             className={`flex-1 w-full max-w-5xl rounded-2xl overflow-hidden shadow-lg ${
               idx === 0 ? "w-full" : "w-full md:w-full"
             }`}
+            style={idx === 1 ? { overflow: "visible" } : {}}
           >
             {videoError ? (
               <div className="flex h-full items-center justify-center bg-gray-100 text-gray-500 text-center">
@@ -210,39 +213,89 @@ export default function FeaturesSection() {
 
           {/* Right Sidebar Content for 2nd Feature - Outside Video Container */}
           {idx === 1 && (
-            <div 
-              className="absolute -translate-y-1/2 translate-x-4 md:translate-x-12 flex flex-col gap-3 z-10 feature-sidebar hidden md:flex"
+            <div
+              className="absolute flex flex-col gap-3 feature-sidebar"
               style={{
-                right: 'calc(var(--spacing) * -50)',
-                top: '65%'
+                right: "-210px",
+                top: "65%",
+                transform: "translateY(-50%)",
+                zIndex: 50,
               }}
             >
               <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
-                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Update my account information</span>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Update my account information
+                </span>
               </button>
-              
+
               <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
                 </svg>
-                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Check daily deals</span>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Check daily deals
+                </span>
               </button>
-              
+
               <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
                 </svg>
-                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">See pull requests that mentioned me</span>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  See pull requests that mentioned me
+                </span>
               </button>
-              
+
               <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
-                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Find unread emails from yesterday</span>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Find unread emails from yesterday
+                </span>
               </button>
             </div>
           )}
