@@ -107,6 +107,25 @@ export default function FeaturesSection() {
           },
         });
       }
+
+      // Sidebar animation for 2nd feature
+      if (idx === 1) {
+        const sidebar = section.querySelector(".feature-sidebar");
+        if (sidebar) {
+          const buttons = sidebar.querySelectorAll("button");
+          gsap.from(buttons, {
+            x: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 75%",
+            },
+          });
+        }
+      }
     });
   }, []);
 
@@ -125,7 +144,7 @@ export default function FeaturesSection() {
               : idx % 2 === 1
               ? "w-full md:w-1/2 items-center"
               : "w-full md:w-1/2 md:ml-auto items-center"
-          }`}
+          } ${idx === 1 ? "relative" : ""}`}
         >
           {/* Text Content */}
           <div
@@ -188,6 +207,45 @@ export default function FeaturesSection() {
               </video>
             )}
           </div>
+
+          {/* Right Sidebar Content for 2nd Feature - Outside Video Container */}
+          {idx === 1 && (
+            <div 
+              className="absolute -translate-y-1/2 translate-x-4 md:translate-x-12 flex flex-col gap-3 z-10 feature-sidebar hidden md:flex"
+              style={{
+                right: 'calc(var(--spacing) * -50)',
+                top: '65%'
+              }}
+            >
+              <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Update my account information</span>
+              </button>
+              
+              <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Check daily deals</span>
+              </button>
+              
+              <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">See pull requests that mentioned me</span>
+              </button>
+              
+              <button className="group flex items-center gap-3 bg-white/95 backdrop-blur-sm rounded-full px-4 py-3 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm font-medium text-gray-700 whitespace-nowrap">Find unread emails from yesterday</span>
+              </button>
+            </div>
+          )}
         </div>
       ))}
     </section>
