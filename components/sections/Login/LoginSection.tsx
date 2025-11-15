@@ -40,11 +40,11 @@ export default function LoginClient() {
   // Success State
   if (success) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-6">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
-          <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
-              className="w-10 h-10 text-green-600 dark:text-green-400"
+              className="w-10 h-10 text-green-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -57,10 +57,10 @@ export default function LoginClient() {
               />
             </svg>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
             Signed In!
           </h3>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Redirecting to your account...
           </p>
         </div>
@@ -71,11 +71,11 @@ export default function LoginClient() {
   // Error State
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-red-50 to-pink-100 dark:from-gray-900 dark:to-gray-800 p-6">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
-          <div className="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-red-50 to-pink-100 p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
-              className="w-10 h-10 text-red-600 dark:text-red-400"
+              className="w-10 h-10 text-red-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -88,10 +88,10 @@ export default function LoginClient() {
               />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          <h3 className="text-xl font-bold text-gray-900 mb-2">
             Sign In Failed
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">{error}</p>
+          <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={resetLoginState}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-xl transition-colors"
@@ -105,13 +105,13 @@ export default function LoginClient() {
 
   // Main Login UI
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6">
-      <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-lg rounded-3xl shadow-2xl p-10 max-w-md w-full border border-white/20 dark:border-gray-700">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-100 p-6">
+      <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-10 max-w-md w-full border border-white/20">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             Welcome Back
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Sign in to continue to your Slesh account
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function LoginClient() {
           <button
             onClick={() => handleSignIn("google")}
             disabled={loadingGoogle || loadingAzure}
-            className="group relative w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-600 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="group relative w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-50 text-gray-900 font-medium py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 18 18" fill="none">
               <path
@@ -151,7 +151,7 @@ export default function LoginClient() {
           <button
             onClick={() => handleSignIn("azure")}
             disabled={loadingGoogle || loadingAzure}
-            className="group relative w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 dark:border-gray-600 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="group relative w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-50 text-gray-900 font-medium py-4 px-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 18 18" fill="none">
               <path d="M8.5 1.5H1.5V8.5H8.5V1.5Z" fill="#F25022" />
@@ -167,18 +167,18 @@ export default function LoginClient() {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-gray-500">
             By signing in, you agree to our{" "}
             <a
               href="/terms"
-              className="underline hover:text-blue-600 dark:hover:text-blue-400"
+              className="underline hover:text-blue-600"
             >
               Terms
             </a>{" "}
             and{" "}
             <a
               href="/privacy"
-              className="underline hover:text-blue-600 dark:hover:text-blue-400"
+              className="underline hover:text-blue-600"
             >
               Privacy Policy
             </a>
@@ -190,7 +190,7 @@ export default function LoginClient() {
           <p>
             <Link
               href="/"
-              className="text-blue-600 hover:underline dark:text-blue-400"
+              className="text-blue-600 hover:underline"
             >
               Back to Home
             </Link>

@@ -6,7 +6,7 @@ export default function BlogPreview({ posts = [] as Post[] }: { posts?: Post[] }
 		<section className="py-16">
 			<div className="page-container">
 				<div className="text-center">
-				<h2 className="text-2xl font-semibold text-[color:var(--color-primary)] dark:text-[color:var(--color-primary)]">
+				<h2 className="text-2xl font-semibold text-[color:var(--color-primary)]">
 					From the Blog
 				</h2>
 				<p className="mx-auto mt-3 max-w-2xl text-[#475467]">
@@ -18,10 +18,10 @@ export default function BlogPreview({ posts = [] as Post[] }: { posts?: Post[] }
 					<Link
 						key={i}
 						href={p?.slug?.current ? `/blog/${p.slug.current}` : "#"}
-						className="rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-xl hover:shadow-[color:var(--color-primary-muted)] dark:border-zinc-800 dark:bg-zinc-900/60"
+						className="rounded-2xl border border-zinc-200 bg-white/70 p-6 transition hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-xl hover:shadow-[color:var(--color-primary-muted)]"
 					>
-						<div className="text-lg font-medium text-neutral-900 dark:text-white">{p?.title || `Sample Post ${i + 1}`}</div>
-						<p className="mt-2 line-clamp-3 text-zinc-600 dark:text-zinc-400">{p?.metaDescription || "Short excerpt of the blog post."}</p>
+						<div className="text-lg font-medium text-neutral-900">{p?.title || `Sample Post ${i + 1}`}</div>
+						<p className="mt-2 line-clamp-3 text-zinc-600">{p?.metaDescription || "Short excerpt of the blog post."}</p>
 					</Link>
 				))}
 			</div>

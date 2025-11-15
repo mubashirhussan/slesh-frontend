@@ -21,7 +21,7 @@ export default function Navbar() {
 
   return (
     <header className="mb-24">
-      <nav className="fixed top-0 z-40 w-full py-4 border-zinc-200 bg-white/85 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
+      <nav className="fixed top-0 z-40 w-full py-4 border-zinc-200 bg-white/85 backdrop-blur">
         <div className="navbar-grid mx-auto w-full max-w-7xl items-center gap-6 px-4 py-3">
           <div className="md:w-40 w-full">
             <Link href="/" className="flex items-center gap-2">
@@ -39,25 +39,25 @@ export default function Navbar() {
           <nav className="hidden items-center justify-center gap-6 md:flex">
             <Link
               href="/#features"
-              className="text-[#737373] text-md hover:text-black text dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] text-md hover:text-black"
             >
               Features
             </Link>
             <Link
               href="/pricing"
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               Pricing
             </Link>
             <Link
               href="/blog"
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               Blog
             </Link>
             <Link
               href="/students"
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               Students
             </Link>
@@ -66,19 +66,19 @@ export default function Navbar() {
               prefetch={false}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               Docs
             </Link>
             <Link
               href="/careers"
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               Careers
             </Link>
             <Link
               href={isLoggedIn ? "/account" : "/login"}
-              className="text-[#737373] hover:text-black dark:text-zinc-300 dark:hover:text-white"
+              className="text-[#737373] hover:text-black"
             >
               {isLoggedIn ? "Account" : "Sign In"}
             </Link>
@@ -145,7 +145,7 @@ export default function Navbar() {
         </div>
 
         {open && (
-          <div className="border-t border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-black md:hidden">
+          <div className="border-t border-zinc-200 bg-white px-4 py-3 md:hidden">
             <div className="flex flex-col gap-3">
               <Link
                 className="text-[#475467] transition hover:text-[color:var(--color-primary)]"

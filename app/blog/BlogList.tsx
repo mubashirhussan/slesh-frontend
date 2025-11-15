@@ -82,7 +82,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
             <Link
               key={p.slug?.current}
               href={`/blog/${p.slug?.current}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)] dark:border-zinc-800 dark:bg-zinc-900"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)]"
             >
               {p.mainImage && (
                 <div className="relative w-full h-56 flex-shrink-0">
@@ -97,15 +97,15 @@ export default function BlogList({ posts, categories }: BlogListProps) {
 
               <div className="flex flex-col justify-between flex-grow p-6">
                 <div>
-                  <h2 className="min-h-[3.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)] dark:text-white dark:group-hover:text-[color:var(--color-primary)]">
+                  <h2 className="min-h-[3.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)]">
                     {p.title}
                   </h2>
-                  <p className="mt-3 text-gray-600 dark:text-zinc-400 line-clamp-3 min-h-[4.5rem]">
+                  <p className="mt-3 text-gray-600 line-clamp-3 min-h-[4.5rem]">
                     {p.body?.[0]?.children?.[0]?.text ?? "Read more..."}
                   </p>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-zinc-800">
+                <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
                   {p.author && (
                     <div className="flex items-center gap-2">
                       {/* {p.author.image?.asset?.url && (
@@ -117,7 +117,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
                           className="rounded-full object-cover"
                         />
                       )} */}
-                      <span className="text-sm text-gray-700 dark:text-gray-300">
+                      <span className="text-sm text-gray-700">
                         {p.author.name}
                       </span>
                     </div>
@@ -136,7 +136,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
             </Link>
           ))
         ) : (
-          <p className="text-gray-500 dark:text-gray-400">No posts found.</p>
+          <p className="text-gray-500">No posts found.</p>
         )}
       </div>
 

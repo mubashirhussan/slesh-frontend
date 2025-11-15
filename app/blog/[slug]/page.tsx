@@ -114,8 +114,8 @@ export default async function PostPage({
 
       // 🔖 Handle callouts or custom block types
       callout: ({ value }: { value: any }) => (
-        <div className="my-4 rounded border-l-4 border-[color:var(--color-primary)] bg-[color:var(--color-primary-muted)] p-4 dark:bg-blue-900/20">
-          <p className="text-[color:var(--color-primary)] dark:text-blue-100">
+        <div className="my-4 rounded border-l-4 border-[color:var(--color-primary)] bg-[color:var(--color-primary-muted)] p-4">
+          <p className="text-[color:var(--color-primary)]">
             {value?.text}
           </p>
         </div>
@@ -147,7 +147,7 @@ export default async function PostPage({
 
       // 💬 Highlight text
       highlight: ({ children }: { children: React.ReactNode }) => (
-        <span className="bg-yellow-200 dark:bg-yellow-600 px-1 rounded">
+        <span className="bg-yellow-200 px-1 rounded">
           {children}
         </span>
       ),
@@ -165,7 +165,7 @@ export default async function PostPage({
       h1: ({ children, value }: any) => (
         <h1
           id={value._key}
-          className="text-4xl font-bold mt-10 mb-4 text-black dark:text-white"
+          className="text-4xl font-bold mt-10 mb-4 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
@@ -174,7 +174,7 @@ export default async function PostPage({
       h2: ({ children, value }: any) => (
         <h2
           id={value._key}
-          className="text-3xl font-semibold mt-8 mb-3 text-black dark:text-white"
+          className="text-3xl font-semibold mt-8 mb-3 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
@@ -183,7 +183,7 @@ export default async function PostPage({
       h3: ({ children, value }: any) => (
         <h3
           id={value._key}
-          className="text-2xl font-semibold mt-6 mb-2 text-black dark:text-white"
+          className="text-2xl font-semibold mt-6 mb-2 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
@@ -192,7 +192,7 @@ export default async function PostPage({
       h4: ({ children, value }: any) => (
         <h4
           id={value._key}
-          className="text-xl font-semibold mt-4 mb-2 text-black dark:text-white"
+          className="text-xl font-semibold mt-4 mb-2 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
@@ -201,7 +201,7 @@ export default async function PostPage({
       h5: ({ children, value }: any) => (
         <h5
           id={value._key}
-          className="text-lg font-medium mt-3 mb-1 text-black dark:text-white"
+          className="text-lg font-medium mt-3 mb-1 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
@@ -210,19 +210,19 @@ export default async function PostPage({
       h6: ({ children, value }: any) => (
         <h6
           id={value._key}
-          className="text-base font-medium mt-2 mb-1 text-black dark:text-white"
+          className="text-base font-medium mt-2 mb-1 text-black"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h6>
       ),
       normal: ({ children }) => (
-        <p className="text-base leading-7 text-gray-800 dark:text-gray-300 my-4">
+        <p className="text-base leading-7 text-gray-800 my-4">
           {children}
         </p>
       ),
       blockquote: ({ children }) => (
-        <blockquote className="border-l-4 border-zinc-400 pl-4 italic text-zinc-600 dark:text-zinc-300 my-4">
+        <blockquote className="border-l-4 border-zinc-400 pl-4 italic text-zinc-600 my-4">
           {children}
         </blockquote>
       ),
@@ -230,12 +230,12 @@ export default async function PostPage({
 
     list: {
       bullet: ({ children }) => (
-        <ul className="list-disc ml-6 space-y-2 text-gray-800 dark:text-gray-300">
+        <ul className="list-disc ml-6 space-y-2 text-gray-800">
           {children}
         </ul>
       ),
       number: ({ children }) => (
-        <ol className="list-decimal ml-6 space-y-2 text-gray-800 dark:text-gray-300">
+        <ol className="list-decimal ml-6 space-y-2 text-gray-800">
           {children}
         </ol>
       ),
@@ -332,13 +332,13 @@ export default async function PostPage({
         </aside>
       )}
       <article className="flex-1">
-        <h1 className="text-3xl font-semibold text-black dark:text-white">
+        <h1 className="text-3xl font-semibold text-black">
           {post.title}
         </h1>
 
         {/* Date */}
         {post.publishedAt && (
-          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mt-2 text-sm text-zinc-500">
             {new Date(post.publishedAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -364,7 +364,7 @@ export default async function PostPage({
 
         {/* Body Content */}
         {post.body && (
-          <div className="prose prose-zinc mt-8 dark:prose-invert">
+          <div className="prose prose-zinc mt-8">
             <PortableText
               value={filteredBody}
               components={myPortableTextComponents}
@@ -381,7 +381,7 @@ export default async function PostPage({
                 <Link
                   key={related.slug?.current}
                   href={`/blog/${related.slug?.current}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)] dark:border-zinc-800 dark:bg-zinc-900"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)]"
                 >
                   {related.mainImage && (
                     <div className="relative w-full h-56 flex-shrink-0">
@@ -399,19 +399,19 @@ export default async function PostPage({
 
                   <div className="flex flex-col justify-between flex-grow px-2 py-4">
                     <div>
-                      <h2 className=" line-clamp-2 min-h-[2.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)] dark:text-white dark:group-hover:text-[color:var(--color-primary)]">
+                      <h2 className=" line-clamp-2 min-h-[2.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)]">
                         {related.title}
                       </h2>
-                      <p className="mt-3 text-gray-600 dark:text-zinc-400 line-clamp-2 min-h-[2.5rem]">
+                      <p className="mt-3 text-gray-600 line-clamp-2 min-h-[2.5rem]">
                         {related.body?.[0]?.children?.[0]?.text ??
                           "Read more..."}
                       </p>
                     </div>
 
-                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-zinc-800">
+                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
                       {related.author && (
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-700 dark:text-gray-300">
+                          <span className="text-sm text-gray-700">
                             {related.author.name}
                           </span>
                         </div>
