@@ -113,16 +113,37 @@ export default function FeaturesSection() {
         const sidebar = section.querySelector(".feature-sidebar");
         if (sidebar) {
           const buttons = sidebar.querySelectorAll("button");
-          gsap.from(buttons, {
+          
+          // Set initial state
+          gsap.set(buttons, {
             x: 50,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: 0.15,
-            scrollTrigger: {
-              trigger: section,
-              start: "top 75%",
-            },
+            opacity: 0,
+            rotation: 360,
+          });
+
+          // Create timeline for each button with stagger
+          buttons.forEach((button: any, index: number) => {
+            const tl = gsap.timeline({
+              delay: index * 0.15, // Stagger delay
+              scrollTrigger: {
+                trigger: section,
+                start: "top 75%",
+              },
+            });
+
+            // First: Rotate from 360 to 0
+            tl.to(button, {
+              rotation: 0,
+              duration: 0.6,
+              ease: "power3.out",
+            })
+            // Then: Move to position and fade in
+            .to(button, {
+              x: 0,
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out",
+            }, "-=0.2"); // Start slightly before rotation ends
           });
         }
       }
