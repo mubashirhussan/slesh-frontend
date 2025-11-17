@@ -131,7 +131,7 @@ export default function HeroSection() {
               prefetch={false}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative hidden  items-center gap-2 overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
+              className="relative   items-center gap-2 overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
               <span className="relative z-10  text-lg font-semibold flex items-center gap-2">
