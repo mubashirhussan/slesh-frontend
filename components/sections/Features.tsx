@@ -235,7 +235,7 @@ export default function FeaturesSection() {
           {/* Right Sidebar Content for 2nd Feature - Outside Video Container */}
           {idx === 1 && (
             <div
-              className="absolute flex flex-col gap-3 feature-sidebar"
+              className="absolute flex flex-col gap-3 feature-sidebar hidden  lg:flex"
               style={{
                 right: "-210px",
                 top: "65%",
