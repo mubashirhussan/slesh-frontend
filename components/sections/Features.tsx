@@ -152,17 +152,20 @@ export default function FeaturesSection() {
 
   return (
     <section
-      className="flex flex-col gap-32 py-24 mx-auto px-20"
-      id="features"
-      style={{ overflow: "visible" }}
+    className=" py-24 mx-auto px-20"
+    id="features"
+    style={{ overflow: "visible" }}
     >
-      <h2 className="text-4xl font-bold text-center text-gray-900">Features</h2>
-      {features.map((f, idx) => (
+    <div className="features-banner banner my-8" id="features"></div>
+    <div  className="flex flex-col gap-32">
+  {features.map((f, idx) => (
         <div
           key={idx}
           className={`feature-section flex flex-col gap-8 min-h-[80vh] ${
             idx === 0
               ? "w-full items-center"
+               : idx === features.length - 1
+  ? "w-full md:w-1/2 mx-auto items-center"
               : idx % 2 === 1
               ? "w-full md:w-1/2 items-center"
               : "w-full md:w-1/2 md:ml-auto items-center"
@@ -207,7 +210,7 @@ export default function FeaturesSection() {
 
           {/* Video Content */}
           <div
-            className={`flex-1 w-full max-w-5xl rounded-2xl overflow-hidden shadow-lg ${
+            className={`relative  flex-1 w-full max-w-5xl rounded-2xl overflow-visible shadow-lg ${
               idx === 0 ? "w-full" : "w-full md:w-full"
             }`}
             style={idx === 1 ? { overflow: "visible" } : {}}
@@ -230,8 +233,39 @@ export default function FeaturesSection() {
                 <source src={f.video} type="video/mp4" />
               </video>
             )}
-          </div>
+          {idx === features.length - 1 && (
+  <div
+    className="
+      absolute bottom-4 left-1/2 
+      flex items-center justify-center 
+      gap-[9px]
+      font-medium
+      bg-[rgba(0,82,255,1)]
+      px-[15.2px] py-[11.4px]
+      rounded-[22.8px]
+      -translate-x-1/2
+       z-20
+    "
+     style={{ bottom: "calc(var(--spacing) * -6)" }}
+  >
+    <Image
+      src="/feature-4-icon.svg"
+      alt="Automation"
+      width={22}
+      height={22}
+         className="animate-spin-slow"
+style={{
+    animation: "spin 3s linear infinite",
+    transformOrigin: "center"
+  }}
+    />
+    <p className="text-white text-sm">Starting an automation...</p>
+  </div>
+)}
 
+
+          </div>
+ 
           {/* Right Sidebar Content for 2nd Feature - Outside Video Container */}
           {idx === 1 && (
             <div
@@ -322,6 +356,9 @@ export default function FeaturesSection() {
           )}
         </div>
       ))}
+    </div>
+      {/* <h2 className="text-4xl font-bold text-center text-gray-900">Features</h2> */}
+    
     </section>
   );
 }

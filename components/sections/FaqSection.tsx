@@ -71,9 +71,10 @@ export default function FAQSection() {
 
   return (
     <section className="py-16 max-w-4xl mx-auto px-6 bg-white">
-      <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
+      {/* <h2 className="text-4xl font-bold mb-12 text-center text-gray-900">
         Frequently Asked Questions
-      </h2>
+      </h2> */}
+       <div className="faq-banner banner my-8" id="faq"></div>
       <div className="flex flex-col gap-4">
         {faqs.map((f, idx) => (
           <div
