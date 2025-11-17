@@ -20,9 +20,9 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="mb-24">
-      <nav className="fixed top-0 z-40 w-full py-4 border-zinc-200 bg-white/85 backdrop-blur">
-        <div className="navbar-grid mx-auto w-full max-w-7xl items-center gap-6 px-4 py-3">
+    <header className="mb-[68px] ">
+      <nav className="fixed top-0 md:px-[30px] z-40 w-full py-4 border-zinc-200 bg-white/85 backdrop-blur">
+        <div className="navbar-grid mx-auto w-full items-center gap-6 px-4 ">
           <div className="md:w-40 w-full">
             <Link href="/" className="flex items-center gap-2">
               <Image
