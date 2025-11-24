@@ -98,18 +98,19 @@ html {
   backdrop-filter: blur(37.099998474121094px);
 }
 .features-banner {
-  background-image: url('/features-banner.svg');
+  background-image: url("/features-banner.svg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  /* height: 21px;  */
+  height: 260px;
 }
 
 .faq-banner {
-  background-image: url('/faq-banner.svg');
-   background-position: center;
+  background-image: url("/faq-banner.svg");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  height: 260px;
 }
 
 /* .banner {
