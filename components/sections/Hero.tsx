@@ -111,7 +111,7 @@ export default function HeroSection() {
             {/* Explore Button */}
 
             <Link href="/#features" scroll={true}>
-             <button className="group relative cursor-pointer bg-white hover:text-white text-black px-8 py-3 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
+             <button className="group relative cursor-pointer bg-white hover:text-white text-black px-8 py-3 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
   <span className="relative z-10 font-medium text-[18.12px] leading-[100%]">
     Explore{" "}
     <span className="font-semibold italic font-spectral text-[20.06px] leading-[100%]">
@@ -129,7 +129,7 @@ export default function HeroSection() {
               prefetch={false}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative   items-center  overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
+              className="relative   items-center  overflow-hidden rounded-2xl bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
               <span className="relative z-10  text-lg font-semibold flex items-center gap-1">
@@ -141,11 +141,11 @@ export default function HeroSection() {
                   className="object-contain mr-1"
                 />
                  <span className="relative z-10 font-medium text-[18.12px] leading-[100%]">
-   Add to  {" "}
-    <span className="font-semibold  font-spectral text-[20.06px] leading-[100%]">
-       Chrome
-    </span>
-  </span>
+                 Add to  {" "}
+                 <span className="font-semibold  font-spectral text-[20.06px] leading-[100%]">
+                 Chrome
+                 </span> 
+                 </span>
                 {/* Add to  {" "}
                 <span className="font-semibold italic text-[20.06px] leading-[100%] font-spectral ">
                 Chrome
