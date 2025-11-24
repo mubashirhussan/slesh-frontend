@@ -12,49 +12,105 @@ const features = [
   {
     title: "Slesh Follows You Across Tabs",
     subtitle: "Ask Slesh anything",
-    description:
-      "Ask Slesh questions about any page—including PDFs & Videos and get instant answers with live page understanding. Talk to multiple tabs simultaneously so you can make informed decisions without losing track of details.",
+    description: (
+      <>
+        Ask Slesh questions about any page—including{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          PDFs & Videos
+        </span>{" "}
+        and get instant answers with{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          live page understanding.
+        </span>
+        <br />
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          Talk to multiple tabs simultaneously
+        </span>
+        , so you can make informed decisions without losing track of details.
+      </>
+    ),
     video: "/videos/Compare Tabs.mp4",
     bgImage: "/feature-1-back.svg",
-    color: "#0052FF",
+    color: "#0052ff",
+    bg:"rgba(0,82,255,0.07)"
   },
   {
     title: "Slesh Takes You There",
     subtitle: "Stop searching. Start doing.",
-    description:
-      "From hidden buttons to buried settings, Slesh finds what you need and gets you there fast. Simply tell Slesh what you are looking for or would like to do and Slesh gets you there automatically.",
+    description: (
+      <>
+        From hidden buttons to buried settings,{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          Slesh finds what you need and gets you there fast.
+        </span>{" "}
+        Simply tell Slesh what you are looking for or would like to do and{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          Slesh gets you there automatically.
+        </span>
+      </>
+    ),
     video: "/videos/Slesh Gets You Theere.mp4",
     bgImage: "/feature-2-back.svg",
     color: "#C929FF",
+    bg:"rgba(191, 0, 255, 0.07)"
   },
   {
     title: "Access to your apps",
     subtitle: "Connect your favorite tools seamlessly",
-    description:
-      "Slesh integrates with your most-used applications and services. Access Gmail, Calendar, Edit your Google Drive Files and more directly from your browser sidebar. No more switching between apps—everything you need is right where you are.",
+    description: (
+      <>
+        Slesh integrates with your most-used applications and services. Access Gmail, Calendar, Edit your Google Drive Files and more directly from your browser sidebar.{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          No more switching between apps—everything you need is right where you are.
+        </span>
+      </>
+    ),
     video: "/videos/Connected Apps.mp4",
     bgImage: "/feature-3-back.png",
     color: "#FE9D2C",
+    bg:"rgba(255, 136, 0, 0.07)"
   },
   {
     title: "Slesh Understands Context",
     subtitle: "Highlight anything. Get instant help",
-    description:
-      "Need a second opinion or more context? Highlight it and ask Slesh to explain, rephrase, or find more info on other sites. No more copying and Googling—it’s all in one chat.",
+    description: (
+      <>
+        Need a second opinion or more context?{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          Highlight it and ask Slesh
+        </span>{" "}
+        to <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">explain, rephrase</span>, or find more info on other sites.
+        <br />
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          No more copying and Googling
+        </span>
+        —it’s all in one chat.
+      </>
+    ),
     video: "/videos/Slesh Understands Context.mp4",
     bgImage: "/feature-4-back.svg",
     color: "#34E268",
+    bg:"rgba(14, 221, 76, 0.07)"
   },
   {
     title: "Slesh Does It For You",
     subtitle: "Skip the busywork. Let Slesh handle it.",
-    description:
-      "From forms to follow-ups, automate entire web workflows. Skip the clicks—just say what you need, and it gets done.",
+    description: (
+      <>
+        From forms to follow-ups,{" "}
+        <span className="font-medium text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[rgba(9,9,11,0.7)]">
+          automate entire web workflows.
+        </span>{" "}
+        Skip the clicks—just say what you need, and it gets done.
+      </>
+    ),
     video: "/videos/Slesh Does It For You.mp4",
     bgImage: "/feature-1-back.svg",
     color: "#0052FF",
+    bg:"rgba(0, 82, 255, 0.07)"
   },
 ];
+
 
 export default function FeaturesSection() {
   const [videoError, setVideoError] = useState(false);
@@ -173,40 +229,42 @@ export default function FeaturesSection() {
           style={idx === 1 ? { overflow: "visible", height: "auto" } : {}}
         >
           {/* Text Content */}
-          <div
-            className={`flex-1 flex flex-col justify-center text-center max-w-3xl space-y-4 ${
-              idx === 0 ? "w-full" : "w-full md:w-full"
-            }`}
-          >
-            <h3 className="relative inline-block text-md font-semibold uppercase tracking-wide">
-              {/* Decorative background image */}
-              <Image
-                src={f.bgImage}
-                alt=""
-                width={200}
-                height={160}
-                className="absolute left-1/2 -translate-x-1/2 -translate-y-[30%] opacity-60 pointer-events-none z-0"
-              />
+    <div className="flex-1 flex flex-col items-center justify-center text-center max-w-3xl space-y-4 w-full md:w-full">
+  <h3 className="relative inline-block pr-4 py-4 px-3.5 rounded-[14px] z-10">
+    {/* Decorative background image, smaller than title */}
+    <Image
+      src={f.bgImage}
+      alt=""
+      width={150} // smaller width than title
+      height={80} // adjust height proportionally
+    className="absolute left-1/2 -translate-x-1/2 -translate-y-[8.7753px] opacity-[2.567] pointer-events-none z-0"
 
-              {/* Text with background that fits content */}
-              <span
-                className="relative z-10 inline-block px-3 py-1 rounded-md"
-                style={{
-                  color: f.color,
-                  backgroundColor: f.color + "33", // light background based on text color
-                }}
-              >
-                {f.title}
-              </span>
-            </h3>
 
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              {f.subtitle}
-            </h2>
-            <p className="text-gray-600 leading-relaxed text-lg">
-              {f.description}
-            </p>
-          </div>
+    />
+
+    {/* Text with background that fits content */}
+    <span
+      className="relative z-10 inline-block text-[16px] py-3 px-3.5 rounded-[14px] text-[#0052FF] shadow-[0px_4px_15.5px_0px_#0052FF0D,inset_0px_-1px_1px_0px_#0052FF1A] backdrop-blur-[37.1px]"
+      style={{
+        color: f.color,
+        backgroundColor: f.bg,
+      }}
+    >
+      {f.title}
+    </span>
+  </h3>
+
+  <h2 className="font-medium text-[24px] leading-[100%] tracking-[-0.02em] text-center">
+    {f.subtitle}
+  </h2>
+
+  <p className="font-normal text-[16px] leading-[130%] tracking-[-0.02em] text-center text-[#9A9AA5] w-[500px] mx-auto">
+      {f.description}
+    </p>
+</div>
+
+
+
 
           {/* Video Content */}
           <div

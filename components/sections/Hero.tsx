@@ -102,7 +102,7 @@ export default function HeroSection() {
         {/* Hero content */}
         <div className="relative z-10 flex flex-col items-center text-center gap-8 px-6">
        <h1
-  className="font-[Spectral]! font-medium italic text-4xl sm:text-5xl md:text-7xl leading-[88%] sm:leading-[90%] md:leading-[88%] text-center -translate-y-1/4 tracking-[0px] text-white  drop-shadow-lg"
+  className="font-spectral text-white font-medium italic text-[72px] leading-[88%] tracking-[0px] text-center translate-y-[-25%]"
 >
   Browse. Ask. Done.
 </h1>
@@ -111,18 +111,16 @@ export default function HeroSection() {
             {/* Explore Button */}
 
             <Link href="/#features" scroll={true}>
-              <button className="group relative cursor-pointer bg-white hover:text-white text-black px-8 py-3 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
-                {/* text stays above */}
-                <span className="relative z-10  text-lg font-medium">
-                  Explore{" "}
-                  <span className="italic text-lg font-medium">
-                    Slesh
-                  </span>
-                </span>
+             <button className="group relative cursor-pointer bg-white hover:text-white text-black px-8 py-3 rounded-full overflow-hidden transition-all duration-500 hover:shadow-[0_0_15px_rgba(0,100,255,0.4)]">
+  <span className="relative z-10 font-medium text-[18.12px] leading-[100%]">
+    Explore{" "}
+    <span className="font-semibold italic font-spectral text-[20.06px] leading-[100%]">
+      Slesh
+    </span>
+  </span>
+  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
+</button>
 
-                {/* sliding gradient layer */}
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] group-hover:translate-x-0 transition-transform duration-500 ease-out"></span>
-              </button>
             </Link>
 
             {/* Add to Chrome Button */}
@@ -131,21 +129,27 @@ export default function HeroSection() {
               prefetch={false}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative   items-center gap-2 overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
+              className="relative   items-center  overflow-hidden rounded-full bg-black px-4 py-2 text-sm text-white transition-all duration-500 group md:flex"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0042d1] to-[#0064ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
-              <span className="relative z-10  text-lg font-semibold flex items-center gap-2">
+              <span className="relative z-10  text-lg font-semibold flex items-center gap-1">
                 <Image
                   src="/chrome-icon.svg"
                   alt="Chrome"
-                  width={16}
-                  height={16}
-                  className="object-contain"
+                  width={22}
+                  height={22}
+                  className="object-contain mr-1"
                 />
-                Add to 
-                 <span className="italic text-lg font-medium">
-                  Chrome
-                  </span>
+                 <span className="relative z-10 font-medium text-[18.12px] leading-[100%]">
+   Add to  {" "}
+    <span className="font-semibold  font-spectral text-[20.06px] leading-[100%]">
+       Chrome
+    </span>
+  </span>
+                {/* Add to  {" "}
+                <span className="font-semibold italic text-[20.06px] leading-[100%] font-spectral ">
+                Chrome
+                </span> */}
               </span>
             </Link>
           </div>
