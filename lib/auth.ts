@@ -1,7 +1,7 @@
 // lib/auth.ts
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { API_ENDPOINT } from "./constant";
+// import { API_ENDPOINT } from "./constant";
 
 // import { API_ENDPOINT } from "./constants";
 
@@ -233,7 +233,7 @@ export async function fetchWithAuth(
   options: RequestInit = {}
 ): Promise<Response> {
   const token = getToken();
-  return fetch(`${API_ENDPOINT}${url}`, {
+  return fetch(`${SLESH_ENDPOINT}${url}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
