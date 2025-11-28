@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import HomeNavbar from "@/components/HomeNavbar";
+import HomeFooter from "@/components/HomeFooter";
 export const metadata: Metadata = {
   title: "Slesh – AI Browsing Assistant to Summarize, Automate, and Navigate",
   description:
@@ -92,7 +94,9 @@ export default function RootLayout({
         <Script src="/auth-utils.js" strategy="afterInteractive" />
       </head>
       <body className="bg-[#FBFCFF] overflow-x-hidden">
+        <HomeNavbar />
         {children}
+        <HomeFooter />
       </body>
     </html>
   );

@@ -299,7 +299,7 @@ export default async function PostPage({
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-16 flex gap-12">
+    <main className="min-h-screen pt-24 md:pt-28 mx-auto max-w-7xl px-4 pb-16 flex gap-12">
       {/* 🧠 JSON-LD Structured Data */}
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(jsonLd)}

@@ -39,14 +39,14 @@ export default function EnterpriseSection() {
             with full control, integrations, and behavioral tuning.
           </p>
 
-          <div className="flex flex-col gap-4 mb-10 max-w-2xl mx-auto">
+          <div className="flex flex-col gap-4 mb-10 max-w-2xl mx-auto items-center">
             {[
               "Define how Slesh behaves on specific pages of your site",
               "Suggest custom content or actions to your visitors",
               "See how users interact with Slesh through detailed analytics",
             ].map((text, index) => (
-              <div key={index} className="flex items-start gap-3 text-left">
-                <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-2 min-w-fit" />
+              <div key={index} className="flex items-center gap-3 text-center justify-center">
+                <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 min-w-fit" />
                 <span className="text-gray-700 text-base">{text}</span>
               </div>
             ))}

@@ -8,63 +8,6 @@ import { useEffect } from "react";
 
 export default function HomePage() {
   useEffect(() => {
-    // --- Auth / navigation logic ----------------------
-    const isAuthenticated = () => {
-      const authService = (window as any).authService;
-      if (!authService || typeof authService.isAuthenticated !== "function") {
-        return false;
-      }
-      return authService.isAuthenticated();
-    };
-
-    const updateNavigation = () => {
-      const loginLinks = document.querySelectorAll<HTMLAnchorElement>(
-        ".login-link"
-      );
-      const loggedIn = isAuthenticated();
-
-      loginLinks.forEach((link) => {
-        link.textContent = "Account";
-        if (loggedIn) {
-          link.href = "/account";
-        } else {
-          link.href = "/login";
-        }
-        link.classList.remove("sign-out-link");
-        (link as any).onclick = null;
-      });
-    };
-
-    // Initialize nav
-    updateNavigation();
-
-    // When page becomes visible
-    const visibilityHandler = () => {
-      if (document.visibilityState === "visible") {
-        setTimeout(updateNavigation, 100);
-      }
-    };
-    document.addEventListener("visibilitychange", visibilityHandler);
-
-    // When window gains focus
-    const focusHandler = () => setTimeout(updateNavigation, 100);
-    window.addEventListener("focus", focusHandler);
-
-    // Periodic check
-    const authInterval = window.setInterval(updateNavigation, 2000);
-
-    // URL change check
-    let currentUrl = window.location.href;
-    const urlInterval = window.setInterval(() => {
-      if (currentUrl !== window.location.href) {
-        currentUrl = window.location.href;
-        setTimeout(updateNavigation, 100);
-      }
-    }, 100);
-
-    // --- Footer year ----------------------
-    const yearEl = document.getElementById("year");
-    if (yearEl) yearEl.textContent = new Date().getFullYear().toString();
 
     // --- GSAP animations / interactions ----------------
     const gsap = (window as any).gsap;
@@ -601,30 +544,6 @@ export default function HomePage() {
       });
     }
 
-    // --- Mobile nav toggle ----------------
-    const menu = document.getElementById("menuToggle");
-    const navLinks = document.querySelector<HTMLElement>(".nav-links-mobile");
-    const menuClickHandler = () => {
-      if (!menu || !navLinks) return;
-      menu.classList.toggle("open");
-      navLinks.style.display =
-        navLinks.style.display === "flex" ? "none" : "flex";
-    };
-    if (menu) {
-      menu.addEventListener("click", menuClickHandler);
-    }
-
-    const navLinksMobile = document.querySelectorAll<HTMLAnchorElement>(
-      ".nav-links-mobile a"
-    );
-    const navLinkClick = () => {
-      if (!menu || !navLinks) return;
-      menu.classList.remove("open");
-      navLinks.style.display = "none";
-    };
-    navLinksMobile.forEach((link) =>
-      link.addEventListener("click", navLinkClick)
-    );
 
     // --- Video intersection observer ----------------
     const videos = document.querySelectorAll<HTMLVideoElement>(".custom-video");
@@ -669,14 +588,6 @@ export default function HomePage() {
 
     // cleanup
     return () => {
-      document.removeEventListener("visibilitychange", visibilityHandler);
-      window.removeEventListener("focus", focusHandler);
-      clearInterval(authInterval);
-      clearInterval(urlInterval);
-      if (menu) menu.removeEventListener("click", menuClickHandler);
-      navLinksMobile.forEach((link) =>
-        link.removeEventListener("click", navLinkClick)
-      );
       observer.disconnect();
       headers.forEach((header) => header.replaceWith(header.cloneNode(true)));
     };
@@ -685,66 +596,6 @@ export default function HomePage() {
   // ---------- JSX (same structure & classes as your HTML) ----------
   return (
     <>
-      <nav className="navbar nav-desktop">
-        <div className="logo">
-          <a href="/">
-            <img src="/Logo.svg" alt="Slesh" />
-          </a>
-        </div>
-        <ul className="nav-links">
-          <a href="#features">Features</a>
-          <a href="/pricing">Pricing</a>
-          <a href="/blog">Use Cases</a>
-          <a href="/students">Students</a>
-          <a href="https://docs.slesh.ai/" target="_blank">
-            Docs
-          </a>
-          <a href="/careers">Careers</a>
-          <a href="/login" className="login-link">
-            Account
-          </a>
-        </ul>
-        <button className="add-to-chrome btn hover-animation">
-          <img src="/chrome-icon.svg" alt="" />
-          <p>
-            Add to <span className="spectral-font">Chrome</span>
-          </p>
-        </button>
-      </nav>
-
-      <nav className="navbar nav-mobile">
-        <div className="nav-left">
-          <div className="menu-icon" id="menuToggle">
-            <span></span>
-            <span></span>
-          </div>
-          <div className="logo">
-            <a href="/">
-              <img src="/Logo.svg" alt="Slesh" />
-            </a>
-          </div>
-          <ul className="nav-links nav-links-mobile">
-            <a href="#features">Features</a>
-            <a href="/pricing">Pricing</a>
-            <a href="/blog">Use Cases</a>
-            <a href="/students">Students</a>
-            <a href="https://docs.slesh.ai/" target="_blank">
-              Docs
-            </a>
-            <a href="/careers">Careers</a>
-            <a href="/login" className="login-link">
-              Account
-            </a>
-          </ul>
-        </div>
-        <button className="add-to-chrome btn">
-          <img src="/chrome-icon.svg" alt="" />
-          <p>
-            Add to <span className="spectral-font">Chrome</span>
-          </p>
-        </button>
-      </nav>
-
       <section className="hero">
         <div className="hero-container">
           <div className="messages-img"></div>
@@ -1080,65 +931,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      <footer className="footer-section">
-        <div className="footer-content">
-          <div className="footer-top">
-            <div className="left">
-              <p className="copyright-text">
-                ©<span id="year"></span> Slesh by Interphase Labs, Inc.
-              </p>
-            </div>
-
-            <div className="center">
-              <div className="footer-links">
-                <a
-                  href="https://x.com/getslesh"
-                  target="_blank"
-                  className="footer-link"
-                >
-                  X
-                </a>
-                <a
-                  href="https://discord.gg/7JG597AfWd"
-                  target="_blank"
-                  className="footer-link"
-                >
-                  Discord
-                </a>
-                <a href="/slsh" className="footer-link">
-                  SLSH
-                </a>
-                <a
-                  href="https://docs.slesh.ai/"
-                  target="_blank"
-                  className="footer-link"
-                >
-                  Docs
-                </a>
-                <a href="/careers" className="footer-link">
-                  Careers
-                </a>
-                <a href="/terms/" target="_blank" className="footer-link">
-                  Terms &amp; Conditions
-                </a>
-                <a href="/privacy/" target="_blank" className="footer-link">
-                  Privacy Policy
-                </a>
-              </div>
-            </div>
-
-            <div className="right">
-              <button className="add-to-chrome btn hover-animation">
-                <img src="/chrome-icon.svg" alt="" />
-                <p>
-                  Add to <span className="spectral-font">Chrome</span>
-                </p>
-              </button>
-            </div>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
