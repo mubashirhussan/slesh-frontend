@@ -1,103 +1,138 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function StudentsHero() {
   const [videoError, setVideoError] = useState(false);
+
   useEffect(() => {
-    gsap.fromTo(
-      ".hero-title",
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-    );
-    gsap.fromTo(
-      ".hero-desc",
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, delay: 0.2, ease: "power3.out" }
-    );
-    gsap.fromTo(
-      ".hero-cta",
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, delay: 0.4, ease: "power3.out" }
-    );
-    gsap.fromTo(
-      ".hero-video",
-      { y: 60, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, delay: 0.6, ease: "power3.out" }
-    );
+    // Add to Chrome button functionality
+    const addToChromeButtons =
+      document.querySelectorAll<HTMLButtonElement>(".add-to-chrome");
+    addToChromeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        window.location.href =
+          "https://chromewebstore.google.com/detail/slesh-ask-search-automate/ikfopgggdcafagjeflhomdpolhdcfenp?utm_source=Students&utm_medium=students-cta&utm_campaign=student-conversion";
+      });
+    });
+
+    // GSAP animations
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      gsap.fromTo(
+        ".students-hero-content h1",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+        }
+      );
+
+      gsap.fromTo(
+        ".students-hero-content p",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          delay: 0.2,
+          ease: "power3.out",
+        }
+      );
+
+      gsap.fromTo(
+        ".students-cta-container",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          delay: 0.3,
+          ease: "power3.out",
+        }
+      );
+
+      gsap.fromTo(
+        ".students-video-container",
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          delay: 0.5,
+          ease: "power3.out",
+        }
+      );
+    }
+
+    return () => {
+      addToChromeButtons.forEach((btn) => {
+        btn.removeEventListener("click", () => {});
+      });
+    };
   }, []);
 
   return (
-    <section className="w-full bg-linear-to-br from-blue-100/10 to-purple-100/10">
-      <div className="page-container">
-        <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-3xl  p-8 md:p-16">
-          <div className="z-10 text-center w-full">
-            <h1 className="mb-4 text-4xl font-bold text-black md:text-5xl">
-              Slesh for Students
-            </h1>
-            <p className="mx-auto mb-6 max-w-xl text-center text-gray-500">
-              Studying is hard enough. Switching tabs, copy-pasting or
-              screenshots should not add to it.
-            </p>
-
-            <div className="hero-video mx-auto my-8 h-[200px] w-full max-w-4xl overflow-hidden rounded-xl border border-gray-200 bg-gray-100 md:h-[500px]">
-              {videoError ? (
-                <div className="flex h-full w-full items-center justify-center bg-white text-center text-sm text-[#475467]">
-                  Video coming soon. Please install the extension to see it in
-                  action.
-                </div>
-              ) : (
-                <video
-                  className="h-full w-full object-cover"
-                  muted
-                  playsInline
-                  preload="none"
-                  autoPlay
-                  loop
-                  onError={() => setVideoError(true)}
-                >
-                  <source src="/videos/students.mp4" type="video/mp4" />
-                </video>
-              )}
-            </div>
-
-            <div className="flex flex-wrap py-4 justify-center gap-4">
-              <Link
-                href="https://chromewebstore.google.com/detail/slesh-ask-search-automate/ikfopgggdcafagjeflhomdpolhdcfenp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-black px-4 py-2 text-white"
+    <section className="students-hero">
+      <div className="students-hero-container">
+        <div className="students-hero-content">
+          <h1>Slesh for Students</h1>
+          <p>
+            Studying is hard enough. Switching tabs, copy-pasting or screenshots
+            shouldn&apos;t add to it.
+          </p>
+          <div className="students-video-container">
+            {videoError ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                  color: "#475467",
+                }}
               >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0052ff] to-[#0052ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
-                <span className="relative z-10 flex items-center gap-2">
-                  <Image
-                    src="/chrome-icon.svg"
-                    alt="Chrome"
-                    width={18}
-                    height={18}
-                  />
-                  Add to Chrome
-                </span>
-              </Link>
-
-              <Link
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdv5kOpwleJXAokIekcBIua68Bac1ibNLcHLj9U8YYlQIFc8Q/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex items-center justify-center overflow-hidden rounded-lg border border-blue-600 bg-transparent px-4 py-2 text-blue-600"
+                Your browser does not support the video tag.
+              </div>
+            ) : (
+              <video
+                className="students-video"
+                muted
+                playsInline
+                preload="none"
+                autoPlay
+                loop
+                onError={() => setVideoError(true)}
               >
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#0052ff] to-[#0052ff] transition-transform duration-500 ease-out group-hover:translate-x-0"></span>
-                <span className="relative z-10 hover:text-white">
-                  Apply to be an Ambassador
-                </span>
-              </Link>
-            </div>
+                <source src="/videos/students.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+          </div>
+
+          <div className="students-cta-container">
+            <button className="add-to-chrome btn hero-btn btn-animation hover-animation">
+              <img src="/chrome-icon.svg" alt="" />
+              <p>
+                Add to <span className="spectral-font">Chrome</span>
+              </p>
+            </button>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdv5kOpwleJXAokIekcBIua68Bac1ibNLcHLj9U8YYlQIFc8Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ambassador-btn btn hero-btn btn-animation hover-animation"
+            >
+              <p>
+                Apply to be an <span className="spectral-font">Ambassador</span>
+              </p>
+            </a>
           </div>
         </div>
       </div>
