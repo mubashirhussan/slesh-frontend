@@ -1,5 +1,5 @@
-import React from 'react';
-import type { CallToActionCard as CtaCardType } from '@/types/sanity';
+import React from "react";
+import type { CallToActionCard as CtaCardType } from "@/types/sanity";
 
 interface CtaCardProps {
   ctaInfo?: CtaCardType;
@@ -10,10 +10,10 @@ const CtaCard: React.FC<CtaCardProps> = ({ ctaInfo }) => {
 
   return (
     <section className="rounded-lg">
-      <p className="text-md text-[#475467]">{ctaInfo.description}</p>
+      <p className="text-md! text-[#475467]!">{ctaInfo.description}</p>
       <a
         href={ctaInfo.buttonUrl}
-        className="my-4 inline-block w-full rounded bg-[color:var(--color-primary)] p-2 text-center text-white transition hover:bg-[#0042d1]"
+        className="my-4! inline-block! w-full! rounded! bg-(--color-primary)! p-2! text-center! text-white! transition! hover:bg-[#0042d1]!"
       >
         {ctaInfo.buttonText}
       </a>
