@@ -87,142 +87,68 @@ export default async function PostPage({
         block.children.some((c: any) => c.text.trim() !== "")
     ) || [];
   const myPortableTextComponents: PortableTextComponents = {
-    types: {
-      // 🖼️ Handle inline or block images
-      image: ({ value }: { value: any }) => {
-        if (!value?.asset?._ref) return null;
-        const imageUrl = urlFor(value).width(1000).url();
-        return (
-          <div className="my-6 flex justify-center">
-            <Image
-              src={imageUrl}
-              alt={value?.alt || "Blog image"}
-              width={1000}
-              height={600}
-              className="rounded-xl object-cover"
-            />
-          </div>
-        );
-      },
-
-      // 💻 Handle code blocks
-      code: ({ value }: { value: any }) => (
-        <pre className="bg-gray-900 text-gray-100 rounded-lg p-4 my-4 overflow-x-auto text-sm">
-          <code>{value.code}</code>
-        </pre>
-      ),
-
-      // 🔖 Handle callouts or custom block types
-      callout: ({ value }: { value: any }) => (
-        <div className="my-4 rounded border-l-4 border-[color:var(--color-primary)] bg-[color:var(--color-primary-muted)] p-4">
-          <p className="text-[color:var(--color-primary)]">
-            {value?.text}
-          </p>
-        </div>
-      ),
-    },
-
-    marks: {
-      // 🔗 Hyperlinks
-      link: ({
-        children,
-        value,
-      }: {
-        children: React.ReactNode;
-        value?: any;
-      }) => {
-        const href = value?.href || "#";
-        const isExternal = href.startsWith("http");
-        return (
-          <Link
-            href={href}
-            target={isExternal ? "_blank" : "_self"}
-            rel={isExternal ? "noopener noreferrer" : undefined}
-            className="text-[color:var(--color-primary)] underline hover:opacity-80"
-          >
-            {children}
-          </Link>
-        );
-      },
-
-      // 💬 Highlight text
-      highlight: ({ children }: { children: React.ReactNode }) => (
-        <span className="bg-yellow-200 px-1 rounded">
-          {children}
-        </span>
-      ),
-
-      // 🔠 Bold / italic / underline etc.
-      strong: ({ children }) => (
-        <strong className="font-semibold">{children}</strong>
-      ),
-      em: ({ children }) => <em className="italic">{children}</em>,
-      underline: ({ children }) => <u>{children}</u>,
-    },
-
     block: {
-      // 🏷️ Headings
-      h1: ({ children, value }: any) => (
+      h1: ({ children, value }) => (
         <h1
           id={value._key}
-          className="text-4xl font-bold mt-10 mb-4 text-black"
+          className="text-4xl! font-bold! mt-10! mb-4! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h1>
       ),
-      h2: ({ children, value }: any) => (
+      h2: ({ children, value }) => (
         <h2
           id={value._key}
-          className="text-3xl font-semibold mt-8 mb-3 text-black"
+          className="text-3xl! font-semibold! mt-8! mb-3! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h2>
       ),
-      h3: ({ children, value }: any) => (
+      h3: ({ children, value }) => (
         <h3
           id={value._key}
-          className="text-2xl font-semibold mt-6 mb-2 text-black"
+          className="text-2xl! font-semibold! mt-6! mb-2! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h3>
       ),
-      h4: ({ children, value }: any) => (
+      h4: ({ children, value }) => (
         <h4
           id={value._key}
-          className="text-xl font-semibold mt-4 mb-2 text-black"
+          className="text-xl! font-semibold! mt-4! mb-2! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h4>
       ),
-      h5: ({ children, value }: any) => (
+      h5: ({ children, value }) => (
         <h5
           id={value._key}
-          className="text-lg font-medium mt-3 mb-1 text-black"
+          className="text-lg! font-medium! mt-3! mb-1! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h5>
       ),
-      h6: ({ children, value }: any) => (
+      h6: ({ children, value }) => (
         <h6
           id={value._key}
-          className="text-base font-medium mt-2 mb-1 text-black"
+          className="text-base! font-medium! mt-2! mb-1! text-black!"
           style={{ scrollMarginTop: "100px" }}
         >
           {children}
         </h6>
       ),
+
       normal: ({ children }) => (
-        <p className="text-base leading-7 text-gray-800 my-4">
-          {children}
-        </p>
+        <p className="text-base! leading-7! text-gray-800! my-4!">{children}</p>
       ),
+
       blockquote: ({ children }) => (
-        <blockquote className="border-l-4 border-zinc-400 pl-4 italic text-zinc-600 my-4">
+        <blockquote className="border-l-4! border-zinc-400! pl-4! italic! text-zinc-600! my-4!">
           {children}
         </blockquote>
       ),
@@ -230,22 +156,23 @@ export default async function PostPage({
 
     list: {
       bullet: ({ children }) => (
-        <ul className="list-disc ml-6 space-y-2 text-gray-800">
+        <ul className="list-disc! ml-6! space-y-2! text-gray-800!">
           {children}
         </ul>
       ),
       number: ({ children }) => (
-        <ol className="list-decimal ml-6 space-y-2 text-gray-800">
+        <ol className="list-decimal! ml-6! space-y-2! text-gray-800!">
           {children}
         </ol>
       ),
     },
 
     listItem: {
-      bullet: ({ children }) => <li className="leading-6">{children}</li>,
-      number: ({ children }) => <li className="leading-6">{children}</li>,
+      bullet: ({ children }) => <li className="leading-6!">{children}</li>,
+      number: ({ children }) => <li className="leading-6!">{children}</li>,
     },
   };
+
   // 🔹 Extract h2/h3 headings from PortableText content
   const headings =
     post.body
@@ -299,7 +226,7 @@ export default async function PostPage({
   }
 
   return (
-    <main className="min-h-screen pt-24 md:pt-28 mx-auto max-w-7xl px-4 pb-16 flex gap-12">
+    <main className="min-h-screen pt-24 md:pt-28 mx-auto max-w-7xl px-4 pb-16 flex gap-12 blog-section">
       {/* 🧠 JSON-LD Structured Data */}
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(jsonLd)}
@@ -331,125 +258,131 @@ export default async function PostPage({
           </div>
         </aside>
       )}
-      <article className="flex-1">
-        <h1 className="text-3xl font-semibold text-black">
-          {post.title}
-        </h1>
+      <article className="flex-1 flex flex-col items-center">
+        <div className="w-full max-w-4xl">
+          <h1 className="text-3xl md:text-4xl font-semibold text-black mb-4">
+            {post.title}
+          </h1>
 
-        {/* Date */}
-        {post.publishedAt && (
-          <p className="mt-2 text-sm text-zinc-500">
-            {new Date(post.publishedAt).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-        )}
-        {/* <p className="text-sm text-zinc-700 dark:text-zinc-300">
+          {/* Date */}
+          {post.publishedAt && (
+            <p className="mt-2 text-sm text-zinc-500 mb-6">
+              {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          )}
+          {/* <p className="text-sm text-zinc-700 dark:text-zinc-300">
       By <span className="font-medium">{post.author?.name}</span>
     </p> */}
-        {/* Main Image */}
-        {post.mainImage && (
-          <div className="mt-6 w-full">
-            <Image
-              src={urlFor(post.mainImage).width(400).url()}
-              alt={post.title}
-              width={1000}
-              height={200} // intrinsic ratio
-              className="rounded-lg h-96 w-full object-cover"
-            />
-          </div>
-        )}
-
-        {/* Body Content */}
-        {post.body && (
-          <div className="prose prose-zinc mt-8">
-            <PortableText
-              value={filteredBody}
-              components={myPortableTextComponents}
-            />
-          </div>
-        )}
-
-        <PostBottomButtons postTitle={post.title} />
-        {post.relatedPosts && post.relatedPosts.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-semibold mb-6">Related Posts</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {post.relatedPosts.map((related, idx) => (
-                <Link
-                  key={related.slug?.current}
-                  href={`/blog/${related.slug?.current}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--color-primary)] hover:shadow-2xl hover:shadow-[color:var(--color-primary-muted)]"
-                >
-                  {related.mainImage && (
-                    <div className="relative w-full h-56 flex-shrink-0">
-                      <Image
-                        src={urlFor(related.mainImage)
-                          .width(800)
-                          .height(400)
-                          .url()}
-                        alt={related.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex flex-col justify-between flex-grow px-2 py-4">
-                    <div>
-                      <h2 className=" line-clamp-2 min-h-[2.5rem] text-xl font-semibold text-black transition group-hover:text-[color:var(--color-primary)]">
-                        {related.title}
-                      </h2>
-                      <p className="mt-3 text-gray-600 line-clamp-2 min-h-[2.5rem]">
-                        {related.body?.[0]?.children?.[0]?.text ??
-                          "Read more..."}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
-                      {related.author && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-700">
-                            {related.author.name}
-                          </span>
-                        </div>
-                      )}
-                      <span className="text-sm text-[#667085]">
-                        {related.publishedAt
-                          ? new Date(related.publishedAt).toLocaleDateString(
-                              "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              }
-                            )
-                          : "Draft"}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+          {/* Main Image */}
+          {post.mainImage && (
+            <div className="mt-6 w-full flex justify-center">
+              <Image
+                src={urlFor(post.mainImage).width(400).url()}
+                alt={post.title}
+                width={1000}
+                height={200} // intrinsic ratio
+                className="rounded-lg h-96 w-full object-cover"
+              />
             </div>
-          </section>
-        )}
-        {/* FAQ Section */}
-        {post.faq && post.faq.length > 0 && <FAQSection faqs={post} />}
+          )}
 
-        {/* Highlight CTA */}
-        {post.highlightCta && (
-          <section className="mt-12 py-16 rounded-lg bg-gradient-to-r from-[color:var(--color-primary)] to-[#003bbd] p-8 text-center text-white">
-            <h2 className="text-xl font-bold">{post.highlightCta.headline}</h2>
-            <a
-              href={post.highlightCta.buttonUrl}
-              className="inline-block mt-4 px-6 py-2 bg-white text-[#005BB5] font-bold rounded hover:bg-zinc-200"
-            >
-              {post.highlightCta.buttonText}
-            </a>
-          </section>
-        )}
+          {/* Body Content */}
+          {post.body && (
+            <div className="prose prose-zinc mt-8 max-w-none">
+              <PortableText
+                value={filteredBody}
+                components={myPortableTextComponents}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="w-full max-w-4xl">
+          <PostBottomButtons postTitle={post.title} />
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <section className="mt-12">
+              <h2 className="text-2xl! font-semibold! mb-6! ">Related Posts</h2>
+              <div className="grid md:grid-cols-3 gap-6 justify-items-center">
+                {post.relatedPosts.map((related) => (
+                  <Link
+                    key={related.slug?.current}
+                    href={`/blog/${related.slug?.current}`}
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-(--color-primary) hover:shadow-2xl hover:shadow-(color:--color-primary-muted)"
+                  >
+                    {related.mainImage && (
+                      <div className="relative w-full h-56 shrink-0">
+                        <Image
+                          src={urlFor(related.mainImage)
+                            .width(800)
+                            .height(400)
+                            .url()}
+                          alt={related.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex flex-col justify-between grow px-2 py-4">
+                      <div>
+                        <h2 className=" line-clamp-2 min-h-10 text-xl font-semibold text-black transition group-hover:text-(--color-primary)">
+                          {related.title}
+                        </h2>
+                        <p className="mt-3 text-gray-600 line-clamp-2 min-h-10">
+                          {related.body?.[0]?.children?.[0]?.text ??
+                            "Read more..."}
+                        </p>
+                      </div>
+
+                      <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
+                        {related.author && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-700">
+                              {related.author.name}
+                            </span>
+                          </div>
+                        )}
+                        <span className="text-sm text-[#667085]">
+                          {related.publishedAt
+                            ? new Date(related.publishedAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                }
+                              )
+                            : "Draft"}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+          {/* FAQ Section */}
+          {post.faq && post.faq.length > 0 && <FAQSection faqs={post} />}
+
+          {/* Highlight CTA */}
+          {post.highlightCta && (
+            <section className="mt-12 py-16 rounded-lg bg-linear-to-r from-(--color-primary) to-[#003bbd] p-8  text-white">
+              <h2 className="text-xl font-bold">
+                {post.highlightCta.headline}
+              </h2>
+              <a
+                href={post.highlightCta.buttonUrl}
+                className="inline-block  mt-4 px-6 py-2 bg-white text-[#005BB5]! font-bold rounded "
+              >
+                {post.highlightCta.buttonText}
+              </a>
+            </section>
+          )}
+        </div>
       </article>
     </main>
   );

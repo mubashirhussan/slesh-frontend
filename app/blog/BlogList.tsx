@@ -40,9 +40,9 @@ export default function BlogList({ posts, categories }: BlogListProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col items-center">
       {/* ---------- Category Tabs ---------- */}
-      <div className="mb-10 flex flex-wrap justify-center gap-3">
+      <div className="mb-10 flex flex-wrap justify-center gap-3 w-full">
         <button
           onClick={() => {
             setSelectedCategory("All");
@@ -76,7 +76,7 @@ export default function BlogList({ posts, categories }: BlogListProps) {
       </div>
 
       {/* ---------- Blog Cards ---------- */}
-      <div className="mx-auto grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
         {paginatedPosts?.length ? (
           paginatedPosts.map((p) => (
             <Link
