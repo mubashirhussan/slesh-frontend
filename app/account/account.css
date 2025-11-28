@@ -1,0 +1,924 @@
+/* Account Page Specific Styles */
+.settings-wrapper {
+  min-height: 100vh;
+  padding: 120px 30px 80px;
+  display: flex;
+  justify-content: center;
+  background: #fbfcff;
+}
+
+.settings-container {
+  max-width: 680px;
+  width: 100%;
+}
+
+/* Loading State Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(0, 82, 255, 0.1);
+  border-top: 4px solid #0052ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24px;
+}
+
+.loading-text {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #09090b;
+  margin-bottom: 8px;
+}
+
+.loading-subtext {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #9a9aa5;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.content-hidden {
+  display: none;
+}
+
+.settings-header {
+  margin-bottom: 48px;
+  text-align: left;
+}
+
+.settings-title {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 120%;
+  color: #09090b;
+  margin-bottom: 12px;
+}
+
+.settings-subtitle {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+  color: #9a9aa5;
+}
+
+.settings-section {
+  background: #ffffff;
+  border: 1px solid rgba(154, 154, 165, 0.15);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0px 4px 15.5px 0px rgba(154, 154, 165, 0.08);
+}
+
+.section-title {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #09090b;
+  margin-bottom: 8px;
+}
+
+.section-description {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #9a9aa5;
+  margin-bottom: 24px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(154, 154, 165, 0.1);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-content {
+  flex: 1;
+}
+
+.setting-label {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  color: #09090b;
+  margin-bottom: 4px;
+}
+
+.setting-text {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #9a9aa5;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 52px;
+  height: 32px;
+  background: #0052ff;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 16px;
+}
+
+.toggle-switch.disabled {
+  background: rgba(154, 154, 165, 0.3);
+}
+
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+.toggle-switch.disabled::before {
+  transform: translateX(16px);
+}
+
+.danger-section {
+  border-color: rgba(255, 107, 107, 0.2);
+  background: rgba(255, 107, 107, 0.02);
+}
+
+.danger-item {
+  background: rgba(255, 107, 107, 0.05);
+  border: 1px solid rgba(255, 107, 107, 0.15);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.danger-item:last-child {
+  margin-bottom: 0;
+}
+
+.danger-content h3 {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 120%;
+  color: #ff4444;
+  margin-bottom: 4px;
+}
+
+.danger-content p {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #9a9aa5;
+}
+
+.danger-button {
+  background: transparent;
+  border: 1.5px solid #ff4444;
+  color: #ff4444;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+}
+
+.danger-button:hover {
+  background: #ff4444;
+  color: white;
+}
+
+.plan-section {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 82, 255, 0.05) 0%,
+    rgba(191, 0, 255, 0.05) 100%
+  );
+  border: 1px solid rgba(0, 82, 255, 0.15);
+}
+
+.current-plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  background: white;
+  border: 1px solid rgba(0, 82, 255, 0.2);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.plan-info {
+  flex: 1;
+}
+
+.plan-name {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #0052ff;
+  margin-bottom: 4px;
+}
+
+.plan-price {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  color: #09090b;
+  margin-bottom: 8px;
+}
+
+.plan-status {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #9a9aa5;
+}
+
+.plan-badge {
+  background: #0052ff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.plan-button {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.plan-button.primary {
+  background: #0052ff;
+  color: white;
+}
+
+.plan-button.primary:hover {
+  background: #0041cc;
+}
+
+.plan-button.secondary {
+  background: transparent;
+  color: #0052ff;
+  border: 1.5px solid #0052ff;
+}
+
+.plan-button.secondary:hover {
+  background: rgba(0, 82, 255, 0.05);
+}
+
+.usage-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.usage-item {
+  background: rgba(0, 82, 255, 0.05);
+  border: 1px solid rgba(0, 82, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.usage-label {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 120%;
+  color: #9a9aa5;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.usage-value {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: #0052ff;
+}
+
+/* Connected Apps Styles */
+.connected-apps-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.connected-app-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(154, 154, 165, 0.15);
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.connected-app-item:hover {
+  border-color: rgba(0, 82, 255, 0.2);
+  box-shadow: 0px 4px 15.5px 0px rgba(154, 154, 165, 0.08);
+}
+
+.connected-app-item.coming-soon {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.connected-app-item.coming-soon:hover {
+  border-color: rgba(154, 154, 165, 0.15);
+  box-shadow: none;
+}
+
+.app-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.app-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 82, 255, 0.05);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.app-icon img {
+  object-fit: contain;
+  object-position: center;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.app-details {
+  flex: 1;
+}
+
+.app-name {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: #09090b;
+  margin-bottom: 4px;
+}
+
+.app-description {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #9a9aa5;
+}
+
+.app-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator.connected {
+  background: #34A853;
+}
+
+.status-indicator.disconnected {
+  background: #9a9aa5;
+}
+
+.status-indicator.expired {
+  background: #FBBC04;
+}
+
+.status-indicator.error {
+  background: #EA4335;
+}
+
+.status-indicator.coming-soon {
+  background: #9a9aa5;
+  opacity: 0.5;
+}
+
+.status-indicator.partial {
+  background: #FBBC04;
+  position: relative;
+}
+
+.status-indicator.partial::after {
+  content: "!";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #FF6B35;
+  color: white;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-text {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 120%;
+  color: #09090b;
+}
+
+.connect-button {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 100px;
+}
+
+.connect-button:not(.disabled) {
+  background: #0052ff;
+  color: white;
+}
+
+.connect-button:not(.disabled):hover {
+  background: #0041cc;
+}
+
+.connect-button.disabled {
+  background: rgba(154, 154, 165, 0.2);
+  color: #9a9aa5;
+  cursor: not-allowed;
+}
+
+.connect-button.connected {
+  background: transparent;
+  color: #EA4335;
+  border: 1.5px solid #EA4335;
+}
+
+.connect-button.connected:hover {
+  background: #EA4335;
+  color: white;
+}
+
+/* Button group for connected apps */
+.button-group {
+  display: flex;
+  align-items: center;
+}
+
+/* Permission Tooltip Styles - Only for partial connections */
+.permission-tooltip.partial,
+.permission-tooltip.connected {
+  position: relative;
+  cursor: help;
+}
+
+.tooltip-content {
+  display: none;
+}
+
+.permission-tooltip.partial .tooltip-content,
+.permission-tooltip.connected .tooltip-content {
+  display: block !important;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 1000;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+  background: #1a1a1a;
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: normal;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  min-width: 320px;
+  max-width: 500px;
+}
+
+.permission-tooltip.partial .tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1a1a1a;
+}
+
+.permission-tooltip.partial:hover .tooltip-content,
+.permission-tooltip.connected:hover .tooltip-content {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.permission-section {
+  margin-bottom: 12px;
+}
+
+.permission-section:last-child {
+  margin-bottom: 0;
+}
+
+.permission-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.permission-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  max-width: none;
+}
+
+.permission-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 12px;
+  min-height: 40px;
+}
+
+.permission-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.permission-icon.granted {
+  background: #34A853;
+  color: white;
+}
+
+.permission-icon.denied {
+  background: #EA4335;
+  color: white;
+}
+
+.permission-name {
+  flex: 1;
+  color: #e0e0e0;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.permission-description {
+  font-size: 10px;
+  color: #9a9aa5;
+  line-height: 1.2;
+  grid-column: 1 / -1;
+  margin-left: 28px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+/* Google Warning Dialog Styles */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.dialog-overlay.show {
+  display: flex;
+}
+
+.dialog-container {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: dialogSlideIn 0.3s ease-out;
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px 16px;
+  border-bottom: 1px solid rgba(154, 154, 165, 0.15);
+}
+
+.dialog-title {
+  font-family: "Geist", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  color: #09090b;
+  margin: 0;
+}
+
+.dialog-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #9a9aa5;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-close:hover {
+  background: rgba(154, 154, 165, 0.1);
+  color: #09090b;
+}
+
+.dialog-content {
+  padding: 24px 32px;
+}
+
+.warning-text {
+  margin-bottom: 24px;
+}
+
+.warning-text p {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  color: #09090b;
+  margin-bottom: 12px;
+}
+
+.warning-text p:last-child {
+  margin-bottom: 0;
+}
+
+.warning-screenshot {
+  margin: 24px 0;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(154, 154, 165, 0.15);
+}
+
+.warning-screenshot img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.warning-instructions {
+  background: rgba(0, 82, 255, 0.05);
+  border: 1px solid rgba(0, 82, 255, 0.15);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.warning-instructions p {
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  color: #0052ff;
+  margin-bottom: 12px;
+}
+
+.warning-instructions ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.warning-instructions li {
+  font-family: "Geist", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: #09090b;
+  margin-bottom: 8px;
+}
+
+.warning-instructions li:last-child {
+  margin-bottom: 0;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px 32px 24px;
+  border-top: 1px solid rgba(154, 154, 165, 0.15);
+  justify-content: flex-end;
+}
+
+.dialog-button {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-family: "Geist", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 120px;
+}
+
+.dialog-button.primary {
+  background: #0052ff;
+  color: white;
+}
+
+.dialog-button.primary:hover {
+  background: #0041cc;
+}
+
+.dialog-button.secondary {
+  background: transparent;
+  color: #9a9aa5;
+  border: 1.5px solid rgba(154, 154, 165, 0.3);
+}
+
+.dialog-button.secondary:hover {
+  background: rgba(154, 154, 165, 0.05);
+  color: #09090b;
+  border-color: rgba(154, 154, 165, 0.5);
+}
+
+@media (max-width: 768px) {
+  .settings-wrapper {
+    padding: 100px 20px 60px;
+  }
+
+  .settings-section {
+    padding: 24px;
+  }
+
+  .settings-title {
+    font-size: 28px;
+  }
+
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .toggle-switch {
+    margin-left: 0;
+  }
+
+  .danger-item,
+  .current-plan {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .usage-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-container {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .dialog-header,
+  .dialog-content,
+  .dialog-actions {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+  }
+
+  .dialog-button {
+    width: 100%;
+  }
+}

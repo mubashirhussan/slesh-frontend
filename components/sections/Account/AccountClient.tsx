@@ -1,10 +1,9 @@
-// app/account/AccountClient.tsx
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from "react";
 import { fetchWithAuth, signOut } from "@/lib/auth";
 import { AppKey } from "@/lib/constant";
-import ConnectedApp from "./ConnectedApp";
 import GoogleWarningDialog from "./GoogleWarningDialog";
 
 interface Profile {
@@ -33,6 +32,7 @@ export default function AccountClient() {
   const [connectedApps, setConnectedApps] = useState<ConnectedAppData[]>([]);
   const [showDialog, setShowDialog] = useState(false);
   const [pendingApp, setPendingApp] = useState<string | null>(null);
+  const [usageToggleEnabled, setUsageToggleEnabled] = useState(true);
 
   const loadProfile = async () => {
     try {
@@ -60,21 +60,12 @@ export default function AccountClient() {
     const status = params.get("status");
     if (connected && status === "success") {
       const appName = connected.replace(/-/g, " ");
-      alert(`${appName.charAt(0).toUpperCase() + appName.slice(1)} connected!`);
+      alert(
+        `${appName.charAt(0).toUpperCase() + appName.slice(1)} connected!`
+      );
       window.history.replaceState({}, "", "/account");
       loadConnectedApps();
     }
-  };
-
-  const initializePage = async () => {
-    if (!localStorage.getItem("authToken")) {
-      window.location.href = "/login";
-      return;
-    }
-    setLoading(true);
-    await Promise.all([loadProfile(), loadConnectedApps()]);
-    handleOAuthRedirect();
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -84,21 +75,19 @@ export default function AccountClient() {
         return;
       }
 
-      // Start loading
       setLoading(true);
-
       try {
         await Promise.all([loadProfile(), loadConnectedApps()]);
         handleOAuthRedirect();
       } catch (err) {
         console.error("Initialization failed:", err);
       } finally {
-        setLoading(false); // Always stop loading
+        setLoading(false);
       }
     };
 
     init();
-  }, []); // Empty deps = run once
+  }, []);
 
   const handleConnect = async (app: string) => {
     if (["googleDrive", "gmail", "googleCalendar"].includes(app)) {
@@ -127,233 +116,574 @@ export default function AccountClient() {
     loadConnectedApps();
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-96">
-        <div className="w-12 h-12 border-4 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-4" />
-        <p className="text-lg font-medium">Loading your account...</p>
-      </div>
-    );
-  }
+  const getAppConnection = (appName: string) => {
+    const backendKey = UI_TO_BACKEND[appName];
+    return connectedApps.find((a) => a.app_name === backendKey);
+  };
+
+  const getAppStatus = (appName: string) => {
+    const connection = getAppConnection(appName);
+    if (!connection || connection.connection_status !== "active") {
+      return { status: "disconnected", text: "Not Connected" };
+    }
+    // Simplified status check - you can enhance this with scope checking
+    return { status: "connected", text: "Connected" };
+  };
 
   const plan = profile?.subscriptionPlan || "starter";
   const displayPlan =
     plan === "starter" ? "Free" : plan.charAt(0).toUpperCase() + plan.slice(1);
+  const planStatus = plan === "starter" ? "No billing required" : "Billing active";
+
+  const usage = profile?.usage || {};
+  const limits = profile?.limits || {};
+
+  const formatUsage = (key: string) => {
+    const used = usage[key] || 0;
+    const limit =
+      limits[key] === -1 ? "∞" : (limits[key] || 0).toLocaleString();
+    return `${used.toLocaleString()} / ${limit}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="settings-wrapper">
+        <div className="settings-container">
+          <div className="loading-container" id="loadingContainer">
+            <div className="loading-spinner"></div>
+            <div className="loading-text">Loading your account...</div>
+            <div className="loading-subtext">
+              Please wait while we fetch your account information
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="max-w-3xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-left mb-12">
-          <h1 className="text-3xl font-semibold text-gray-900">Account</h1>
-          <p className="text-gray-500 mt-2">
-            Manage your Slesh account preferences and privacy settings
-          </p>
-        </div>
+      <div className="settings-wrapper">
+        <div className="settings-container">
+          <div id="mainContent">
+            {/* Header */}
+            <div className="settings-header">
+              <h1 className="settings-title">Account</h1>
+              <p className="settings-subtitle">
+                Manage your Slesh account preferences and privacy settings
+              </p>
+            </div>
 
-        {/* Current Plan */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-2">Current Plan</h2>
-          <div className="bg-white rounded-xl p-6 mb-5 border border-blue-200">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="text-xl font-semibold text-blue-600">
-                  {displayPlan}
+            {/* Current Plan Section */}
+            <div className="settings-section plan-section">
+              <h2 className="section-title">Current Plan</h2>
+              <p className="section-description">
+                View your subscription details and usage statistics
+              </p>
+
+              <div className="current-plan">
+                <div className="plan-info">
+                  <div className="plan-name" id="plan-name-display">
+                    {displayPlan}
+                  </div>
+                  <div className="plan-status" id="plan-status-display">
+                    {planStatus}
+                  </div>
                 </div>
-                <div className="text-sm text-gray-500">
-                  {plan === "starter"
-                    ? "No billing required"
-                    : "Billing active"}
+                <div className="plan-badge" id="plan-badge-display">
+                  Active
                 </div>
               </div>
-              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">
-                Active
-              </span>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            {[
-              "total_tokens",
-              "pdf_counter",
-              "video_counter",
-              "automations_counter",
-            ].map((key) => {
-              const used = profile?.usage?.[key] || 0;
-              const limit =
-                profile?.limits?.[key] === -1
-                  ? "∞"
-                  : (profile?.limits?.[key] || 0).toLocaleString();
-              const label =
-                key === "total_tokens"
-                  ? "Tokens"
-                  : key
-                      .replace("_counter", "s")
-                      .replace("pdf", "PDF")
-                      .replace("video", "Video");
-              return (
+              <div className="usage-stats" id="usage-stats">
+                <div className="usage-item">
+                  <div className="usage-label">Tokens Usage</div>
+                  <div className="usage-value" id="usage-api">
+                    {formatUsage("total_tokens")}
+                  </div>
+                </div>
+                <div className="usage-item">
+                  <div className="usage-label">PDFs Analyzed</div>
+                  <div className="usage-value" id="usage-pdfs">
+                    {formatUsage("pdf_counter")}
+                  </div>
+                </div>
+                <div className="usage-item">
+                  <div className="usage-label">Videos Processed</div>
+                  <div className="usage-value" id="usage-videos">
+                    {formatUsage("video_counter")}
+                  </div>
+                </div>
+                <div className="usage-item">
+                  <div className="usage-label">Automations Run</div>
+                  <div className="usage-value" id="usage-automations">
+                    {formatUsage("automations_counter")}
+                  </div>
+                </div>
+              </div>
+
+              <div className="plan-actions">
+                {plan === "starter" ? (
+                  <button
+                    className="plan-button primary"
+                    id="upgradePlanBtn"
+                    onClick={() => (window.location.href = "/pricing")}
+                  >
+                    Upgrade Plan
+                  </button>
+                ) : (
+                  <button
+                    className="plan-button secondary"
+                    id="manageSubscriptionBtn"
+                    onClick={async () => {
+                      const res = await fetchWithAuth(
+                        "/stripe/dashboard/create-portal-session",
+                        { method: "POST" }
+                      );
+                      const data = await res.json();
+                      window.open(data.url, "_blank");
+                    }}
+                  >
+                    Manage Subscription
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Connected Apps Section */}
+            <div className="settings-section">
+              <h2 className="section-title">Connected Apps</h2>
+              <p className="section-description">
+                Connect your favorite apps to enhance your Slesh experience
+              </p>
+
+              <div className="connected-apps-grid" id="connectedAppsGrid">
+                {/* Google Drive */}
+                <div className="connected-app-item" id="googleDriveApp">
+                  <div className="app-info">
+                    <div className="app-icon">
+                      <img
+                        src="/gdrive-icon.png"
+                        alt="Google Drive"
+                        width="24"
+                        height="24"
+                        style={{
+                          objectFit: "contain",
+                          objectPosition: "center",
+                        }}
+                      />
+                    </div>
+                    <div className="app-details">
+                      <div className="app-name">Google Drive</div>
+                      <div className="app-description">
+                        Access and edit your Google Drive files
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-status">
+                    <div
+                      className={`connection-status ${
+                        getAppStatus("googleDrive").status === "connected"
+                          ? "permission-tooltip connected"
+                          : ""
+                      }`}
+                      id="googleDriveStatus"
+                    >
+                      <span
+                        className={`status-indicator ${
+                          getAppStatus("googleDrive").status
+                        }`}
+                      ></span>
+                      <span className="status-text">
+                        {getAppStatus("googleDrive").text}
+                      </span>
+                      <div className="tooltip-content" id="googleDriveTooltip">
+                        <div className="permission-section">
+                          <div className="permission-title">
+                            Google Drive Permissions
+                          </div>
+                          <ul className="permission-list" id="googleDrivePermissions"></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="button-group" id="googleDriveButtonGroup">
+                      <button
+                        className="connect-button"
+                        id="googleDriveConnectBtn"
+                        onClick={() => {
+                          const status = getAppStatus("googleDrive");
+                          if (status.status === "connected") {
+                            disconnectApp("googleDrive");
+                          } else {
+                            handleConnect("googleDrive");
+                          }
+                        }}
+                      >
+                        {getAppStatus("googleDrive").status === "connected"
+                          ? "Disconnect"
+                          : "Connect"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Gmail */}
+                <div className="connected-app-item" id="gmailApp">
+                  <div className="app-info">
+                    <div className="app-icon">
+                      <img
+                        src="/gmail-icon.png"
+                        alt="Gmail"
+                        width="24"
+                        height="24"
+                        style={{
+                          objectFit: "contain",
+                          objectPosition: "center",
+                        }}
+                      />
+                    </div>
+                    <div className="app-details">
+                      <div className="app-name">Gmail</div>
+                      <div className="app-description">
+                        Read, send, and manage your Gmail messages
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-status">
+                    <div
+                      className={`connection-status ${
+                        getAppStatus("gmail").status === "connected"
+                          ? "permission-tooltip connected"
+                          : ""
+                      }`}
+                      id="gmailStatus"
+                    >
+                      <span
+                        className={`status-indicator ${getAppStatus("gmail").status}`}
+                      ></span>
+                      <span className="status-text">
+                        {getAppStatus("gmail").text}
+                      </span>
+                      <div className="tooltip-content" id="gmailTooltip">
+                        <div className="permission-section">
+                          <div className="permission-title">Gmail Permissions</div>
+                          <ul className="permission-list" id="gmailPermissions"></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="button-group" id="gmailButtonGroup">
+                      <button
+                        className="connect-button"
+                        id="gmailConnectBtn"
+                        onClick={() => {
+                          const status = getAppStatus("gmail");
+                          if (status.status === "connected") {
+                            disconnectApp("gmail");
+                          } else {
+                            handleConnect("gmail");
+                          }
+                        }}
+                      >
+                        {getAppStatus("gmail").status === "connected"
+                          ? "Disconnect"
+                          : "Connect"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Google Calendar */}
+                <div className="connected-app-item" id="googleCalendarApp">
+                  <div className="app-info">
+                    <div className="app-icon">
+                      <img
+                        src="/gcalendar-icon.png"
+                        alt="Google Calendar"
+                        width="24"
+                        height="24"
+                      />
+                    </div>
+                    <div className="app-details">
+                      <div className="app-name">Google Calendar</div>
+                      <div className="app-description">
+                        View and manage your calendar events
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-status">
+                    <div
+                      className={`connection-status ${
+                        getAppStatus("googleCalendar").status === "connected"
+                          ? "permission-tooltip connected"
+                          : ""
+                      }`}
+                      id="googleCalendarStatus"
+                    >
+                      <span
+                        className={`status-indicator ${getAppStatus("googleCalendar").status}`}
+                      ></span>
+                      <span className="status-text">
+                        {getAppStatus("googleCalendar").text}
+                      </span>
+                      <div
+                        className="tooltip-content"
+                        id="googleCalendarTooltip"
+                      >
+                        <div className="permission-section">
+                          <div className="permission-title">
+                            Google Calendar Permissions
+                          </div>
+                          <ul
+                            className="permission-list"
+                            id="googleCalendarPermissions"
+                          ></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="button-group"
+                      id="googleCalendarButtonGroup"
+                    >
+                      <button
+                        className="connect-button"
+                        id="googleCalendarConnectBtn"
+                        onClick={() => {
+                          const status = getAppStatus("googleCalendar");
+                          if (status.status === "connected") {
+                            disconnectApp("googleCalendar");
+                          } else {
+                            handleConnect("googleCalendar");
+                          }
+                        }}
+                      >
+                        {getAppStatus("googleCalendar").status === "connected"
+                          ? "Disconnect"
+                          : "Connect"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* X */}
+                <div className="connected-app-item" id="xApp">
+                  <div className="app-info">
+                    <div className="app-icon">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                          fill="#000"
+                        />
+                      </svg>
+                    </div>
+                    <div className="app-details">
+                      <div className="app-name">X</div>
+                      <div className="app-description">
+                        Verify your X account for @SleshGo interactions
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-status">
+                    <div
+                      className={`connection-status ${
+                        getAppStatus("x").status === "connected"
+                          ? "permission-tooltip connected"
+                          : ""
+                      }`}
+                      id="xStatus"
+                    >
+                      <span
+                        className={`status-indicator ${getAppStatus("x").status}`}
+                      ></span>
+                      <span className="status-text">
+                        {getAppStatus("x").text}
+                      </span>
+                      <div className="tooltip-content" id="xTooltip">
+                        <div className="permission-section">
+                          <div className="permission-title">X Permissions</div>
+                          <ul className="permission-list" id="xPermissions"></ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="button-group" id="xButtonGroup">
+                      <button
+                        className="connect-button"
+                        id="xConnectBtn"
+                        onClick={() => {
+                          const status = getAppStatus("x");
+                          if (status.status === "connected") {
+                            disconnectApp("x");
+                          } else {
+                            connectApp("x");
+                          }
+                        }}
+                      >
+                        {getAppStatus("x").status === "connected"
+                          ? "Disconnect"
+                          : "Connect"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Coming Soon */}
+                <div className="connected-app-item coming-soon">
+                  <div className="app-info">
+                    <div className="app-icon">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="3"
+                          y="3"
+                          width="18"
+                          height="18"
+                          rx="2"
+                          stroke="#9a9aa5"
+                          strokeWidth="2"
+                          fill="none"
+                        />
+                        <path
+                          d="M9 9h6v6H9z"
+                          stroke="#9a9aa5"
+                          strokeWidth="2"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div className="app-details">
+                      <div className="app-name">More Apps Coming Soon</div>
+                      <div className="app-description">
+                        Dropbox, Notion, and your favorite apps
+                      </div>
+                    </div>
+                  </div>
+                  <div className="app-status">
+                    <div className="connection-status">
+                      <span className="status-indicator coming-soon"></span>
+                      <span className="status-text">Coming Soon</span>
+                    </div>
+                    <button className="connect-button disabled" disabled>
+                      Coming Soon
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Privacy Settings Section */}
+            <div className="settings-section">
+              <h2 className="section-title">Privacy</h2>
+
+              <div className="setting-item">
+                <div className="setting-content">
+                  <div className="setting-label">Allow Usage Data Collection</div>
+                  <div className="setting-text">
+                    Allow Slesh to collect usage data to improve the service.
+                    Disabling this will delete all your existing conversations.
+                  </div>
+                </div>
                 <div
-                  key={key}
-                  className="bg-blue-50 border border-blue-100 rounded-xl p-4"
-                >
-                  <div className="text-xs text-gray-500 uppercase tracking-wider">
-                    {label}
-                  </div>
-                  <div className="text-lg font-semibold text-blue-600">
-                    {used.toLocaleString()} / {limit}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex gap-3">
-            {plan === "starter" ? (
-              <button
-                onClick={() => (window.location.href = "/pricing")}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
-              >
-                Upgrade Plan
-              </button>
-            ) : (
-              <button
-                onClick={async () => {
-                  const res = await fetchWithAuth(
-                    "/stripe/dashboard/create-portal-session",
-                    { method: "POST" }
-                  );
-                  const data = await res.json();
-                  window.open(data.url, "_blank");
-                }}
-                className="px-6 py-3 border border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50"
-              >
-                Manage Subscription
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Connected Apps */}
-        <div className="bg-white border rounded-2xl p-6">
-          <h2 className="text-xl font-semibold mb-2">Connected Apps</h2>
-          <p className="text-gray-500 mb-6">
-            Connect your favorite apps to enhance your Slesh experience
-          </p>
-          <div className="space-y-4">
-            <ConnectedApp
-              name="googleDrive"
-              icon="/gdrive-icon.png"
-              title="Google Drive"
-              description="Access and edit your Google Drive files"
-              connection={connectedApps.find(
-                (a) => a.app_name === "google_drive"
-              )}
-              onConnect={() => handleConnect("googleDrive")}
-              onDisconnect={() => disconnectApp("googleDrive")}
-            />
-            <ConnectedApp
-              name="gmail"
-              icon="/gmail-icon.png"
-              title="Gmail"
-              description="Read, send, and manage your Gmail messages"
-              connection={connectedApps.find((a) => a.app_name === "gmail")}
-              onConnect={() => handleConnect("gmail")}
-              onDisconnect={() => disconnectApp("gmail")}
-            />
-            <ConnectedApp
-              name="googleCalendar"
-              icon="/gcalendar-icon.png"
-              title="Google Calendar"
-              description="View and manage your calendar events"
-              connection={connectedApps.find(
-                (a) => a.app_name === "google_calendar"
-              )}
-              onConnect={() => handleConnect("googleCalendar")}
-              onDisconnect={() => disconnectApp("googleCalendar")}
-            />
-            <ConnectedApp
-              name="x"
-              icon={`<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" fill="#000"/></svg>`}
-              title="X"
-              description="Verify your X account for @SleshGo interactions"
-              connection={connectedApps.find((a) => a.app_name === "x")}
-              onConnect={() => connectApp("x")}
-              onDisconnect={() => disconnectApp("x")}
-            />
-          </div>
-        </div>
-
-        {/* Privacy & Danger Zone */}
-        <div className="space-y-6">
-          <div className="bg-white border rounded-2xl p-6">
-            <h2 className="text-xl font-semibold mb-4">Privacy</h2>
-            <div className="flex items-center justify-between p-5 border-b">
-              <div>
-                <div className="font-medium">Allow Usage Data Collection</div>
-                <div className="text-sm text-gray-500">
-                  Improves service. Disabling deletes conversations.
-                </div>
-              </div>
-              <div className="w-14 h-8 bg-blue-600 rounded-full relative cursor-pointer">
-                <div className="absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform" />
+                  className={`toggle-switch ${!usageToggleEnabled ? "disabled" : ""}`}
+                  id="usageToggle"
+                  onClick={() => setUsageToggleEnabled(!usageToggleEnabled)}
+                ></div>
               </div>
             </div>
-          </div>
 
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-6">
-            <h2 className="text-xl font-semibold text-red-600 mb-4">
-              Data Management
-            </h2>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center p-5 bg-red-100 rounded-xl">
-                <div>
-                  <h3 className="font-semibold text-red-600">Clear All Data</h3>
-                  <p className="text-sm text-gray-600">
-                    Clear all conversations
-                  </p>
+            {/* Data Management Section */}
+            <div className="settings-section danger-section">
+              <h2 className="section-title">Data Management</h2>
+              <p className="section-description">
+                Manage your account data and conversation history
+              </p>
+
+              <div className="danger-item">
+                <div className="danger-content">
+                  <h3>Clear All Data</h3>
+                  <p>Clear all conversations</p>
                 </div>
                 <button
-                  onClick={() =>
-                    confirm("Clear all data?") && alert("Cleared!")
-                  }
-                  className="px-5 py-2 border border-red-500 text-red-500 rounded-xl hover:bg-red-500 hover:text-white"
+                  className="danger-button"
+                  id="clearDataBtn"
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to clear all your conversations? This action cannot be undone."
+                      )
+                    ) {
+                      alert("All conversations have been cleared.");
+                    }
+                  }}
                 >
                   Clear All
                 </button>
               </div>
-              <div className="flex justify-between items-center p-5 bg-red-100 rounded-xl">
-                <div>
-                  <h3 className="font-semibold text-red-600">Delete Account</h3>
-                  <p className="text-sm text-gray-600">
-                    Permanently delete your account
-                  </p>
+
+              <div className="danger-item">
+                <div className="danger-content">
+                  <h3>Delete Account</h3>
+                  <p>Permanently delete your account</p>
                 </div>
                 <button
-                  onClick={() =>
-                    confirm("Delete account?") && alert("Deletion initiated!")
-                  }
-                  className="px-5 py-2 border border-red-500 text-red-500 rounded-xl hover:bg-red-500 hover:text-white"
+                  className="danger-button"
+                  id="deleteAccountBtn"
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data."
+                      )
+                    ) {
+                      alert(
+                        "Account deletion initiated. You will receive a confirmation email."
+                      );
+                    }
+                  }}
                 >
                   Delete
                 </button>
               </div>
             </div>
-          </div>
 
-          <div className="bg-white border rounded-2xl p-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="font-medium">Sign Out</div>
-                <div className="text-sm text-gray-500">
-                  Sign out of your current session
+            {/* Account Section */}
+            <div className="settings-section">
+              <h2 className="section-title">Account</h2>
+              <p className="section-description">
+                Manage your account settings and authentication
+              </p>
+
+              <div className="setting-item">
+                <div className="setting-content">
+                  <div className="setting-label">Sign Out</div>
+                  <div className="setting-text">
+                    Sign out of your current session and return to the home page
+                  </div>
                 </div>
+                <button
+                  className="danger-button"
+                  id="signOutBtn"
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to sign out? You will need to sign in again to access your account."
+                      )
+                    ) {
+                      signOut();
+                    }
+                  }}
+                >
+                  Sign Out
+                </button>
               </div>
-              <button
-                onClick={() => confirm("Sign out?") && signOut()}
-                className="px-5 py-2 border border-red-500 text-red-500 rounded-xl hover:bg-red-500 hover:text-white"
-              >
-                Sign Out
-              </button>
             </div>
           </div>
         </div>
