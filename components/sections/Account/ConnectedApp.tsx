@@ -110,7 +110,7 @@ export default function ConnectedApp({
                       scope === "users.read" &&
                       connection?.provider_user_email
                         ? `Account Verification for @${connection.provider_user_email}`
-                        : perm.name;
+                        : perm.label;
 
                     return (
                       <li key={scope} className="flex items-start gap-2">
