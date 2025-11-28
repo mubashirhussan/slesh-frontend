@@ -1,97 +1,73 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function EnterpriseSection() {
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (contentRef.current) observer.observe(contentRef.current);
-    if (buttonRef.current) observer.observe(buttonRef.current);
-
-    return () => observer.disconnect();
+    if (contentRef.current) {
+      gsap.fromTo(
+        contentRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".enterprise-section",
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
   }, []);
 
   return (
-    <section className="py-16 bg-gray-50 w-full">
-      <div className="max-w-5xl mx-auto px-6">
-        <div
-          ref={contentRef}
-          className="text-center opacity-0  transition-all duration-700"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Enterprise Solutions
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-            For businesses looking to customize how Slesh works on their website
-            with full control, integrations, and behavioral tuning.
-          </p>
+    <section className="enterprise-section">
+      <div className="enterprise-container">
+        <div className="enterprise-content" ref={contentRef}>
+          <div className="enterprise-text">
+            <h2 className="enterprise-title">Enterprise</h2>
+            <p className="enterprise-description">
+              For businesses looking to customize how Slesh works on their
+              website with full control, integrations, and behavioral tuning.
+            </p>
 
-          <div className="flex flex-col gap-4 mb-10 max-w-2xl mx-auto items-center">
-            {[
-              "Define how Slesh behaves on specific pages of your site",
-              "Suggest custom content or actions to your visitors",
-              "See how users interact with Slesh through detailed analytics",
-            ].map((text, index) => (
-              <div key={index} className="flex items-center gap-3 text-center justify-center">
-                <span className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 min-w-fit" />
-                <span className="text-gray-700 text-base">{text}</span>
+            <div className="enterprise-features">
+              <div className="enterprise-feature-item">
+                <div className="feature-bullet"></div>
+                <span>Define how Slesh behaves on specific pages of your site</span>
               </div>
-            ))}
-          </div>
+              <div className="enterprise-feature-item">
+                <div className="feature-bullet"></div>
+                <span>Suggest custom content or actions to your visitors</span>
+              </div>
+              <div className="enterprise-feature-item">
+                <div className="feature-bullet"></div>
+                <span>
+                  See how users interact with Slesh through detailed analytics
+                </span>
+              </div>
+            </div>
 
-          <button
-            ref={buttonRef}
-            className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-md hover:shadow-lg opacity-0 scale-90 transition-all duration-500"
-          >
-            Contact Us
-          </button>
+            <button
+              className="enterprise-button"
+              onClick={() => {
+                window.location.href =
+                  "mailto:team@slesh.ai?subject=Enterprise Plan Inquiry";
+              }}
+            >
+              Contact Us
+            </button>
+          </div>
         </div>
       </div>
-
-      <style>{`
-        .animate-in {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        button.animate-in {
-          animation: scaleIn 0.5s ease-out 0.3s forwards;
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(48px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </section>
   );
 }

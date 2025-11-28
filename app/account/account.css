@@ -48,8 +48,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .content-hidden {
@@ -456,7 +460,7 @@
 }
 
 .status-indicator.connected {
-  background: #34A853;
+  background: #34a853;
 }
 
 .status-indicator.disconnected {
@@ -464,11 +468,11 @@
 }
 
 .status-indicator.expired {
-  background: #FBBC04;
+  background: #fbbc04;
 }
 
 .status-indicator.error {
-  background: #EA4335;
+  background: #ea4335;
 }
 
 .status-indicator.coming-soon {
@@ -477,7 +481,7 @@
 }
 
 .status-indicator.partial {
-  background: #FBBC04;
+  background: #fbbc04;
   position: relative;
 }
 
@@ -486,7 +490,7 @@
   position: absolute;
   top: -2px;
   right: -2px;
-  background: #FF6B35;
+  background: #ff6b35;
   color: white;
   border-radius: 50%;
   width: 12px;
@@ -535,12 +539,12 @@
 
 .connect-button.connected {
   background: transparent;
-  color: #EA4335;
-  border: 1.5px solid #EA4335;
+  color: #ea4335;
+  border: 1.5px solid #ea4335;
 }
 
 .connect-button.connected:hover {
-  background: #EA4335;
+  background: #ea4335;
   color: white;
 }
 
@@ -650,12 +654,12 @@
 }
 
 .permission-icon.granted {
-  background: #34A853;
+  background: #34a853;
   color: white;
 }
 
 .permission-icon.denied {
-  background: #EA4335;
+  background: #ea4335;
   color: white;
 }
 

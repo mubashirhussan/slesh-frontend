@@ -1,21 +1,36 @@
-// import { sanityClient } from "@/lib/sanity.client";
-// import { pricingQuery } from "@/lib/queries";
-// import type { PricingTier } from "@/types/sanity";
 import EnterpriseSection from "@/components/sections/EnterpriseSection";
 import Pricing from "@/components/sections/Pricing";
-import PricingSkeleton from "@/components/sections/PricingSkeleton";
-import { Suspense } from "react";
+import type { Metadata } from "next";
 
-export const revalidate = 120;
+export const metadata: Metadata = {
+  title: "Slesh — Pricing",
+  description: "Choose your plan. Start free and scale as you grow.",
+  openGraph: {
+    title: "Slesh — Pricing",
+    description: "Choose your plan. Start free and scale as you grow.",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/assets/header.png",
+        width: 1200,
+        height: 630,
+        alt: "Slesh Pricing",
+      },
+    ],
+  },
+  icons: {
+    icon: "/assets/shortcut.png",
+    shortcut: "/assets/shortcut.png",
+    apple: "/assets/shortcut.png",
+  },
+};
 
-export default async function PricingPage() {
-  // const tiers = await sanityClient.fetch<PricingTier[]>(pricingQuery, {}, { cache: "force-cache" });
+export default function PricingPage() {
   return (
-    <main>
-      <Suspense fallback={<PricingSkeleton />}>
-        <Pricing />
-      </Suspense>
+    <>
+      <Pricing />
       <EnterpriseSection />
-    </main>
+    </>
   );
 }
