@@ -3,10 +3,11 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { authService, SLESH_ENDPOINT } from "@/lib/constant";
+// import { authService, SLESH_ENDPOINT } from "@/lib/constant";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Script from "next/script";
+import { authService, SLESH_ENDPOINT } from "@/lib/constant";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,7 +139,9 @@ export default function PricingPlans() {
       }
 
       if (!stripe) {
-        throw new Error("Stripe failed to initialize. Please refresh the page.");
+        throw new Error(
+          "Stripe failed to initialize. Please refresh the page."
+        );
       }
 
       // Use redirectToCheckout exactly as in HTML (it works with CDN Stripe.js)

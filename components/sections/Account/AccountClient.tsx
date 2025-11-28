@@ -2,8 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchWithAuth, signOut } from "@/lib/auth";
-import { AppKey } from "@/lib/constant";
+import { fetchWithAuth, signOut, AppKey } from "@/lib/constant";
 import GoogleWarningDialog from "./GoogleWarningDialog";
 
 interface Profile {

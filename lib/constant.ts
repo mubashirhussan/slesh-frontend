@@ -2,7 +2,84 @@
 
 export const SLESH_ENDPOINT = "https://api.slesh.ai";
 
-interface FetchOptions extends RequestInit {
+export type AppKey = "google_drive" | "gmail" | "google_calendar" | "x";
+
+export const ALL_SCOPES: Record<AppKey, string[]> = {
+  google_drive: [
+    "https://www.googleapis.com/auth/drive.readonly",
+    "https://www.googleapis.com/auth/drive.file",
+  ],
+  gmail: [
+    "https://www.googleapis.com/auth/gmail.readonly",
+    "https://www.googleapis.com/auth/gmail.send",
+    "https://www.googleapis.com/auth/gmail.modify",
+  ],
+  google_calendar: [
+    "https://www.googleapis.com/auth/calendar.readonly",
+    "https://www.googleapis.com/auth/calendar.events",
+  ],
+  x: ["tweet.read", "tweet.write", "users.read", "offline.access"],
+};
+
+export const PERMISSION_MAPPINGS: Record<
+  AppKey,
+  Record<string, { label: string; description: string }>
+> = {
+  google_drive: {
+    "https://www.googleapis.com/auth/drive.readonly": {
+      label: "View files",
+      description: "Read access to your Google Drive files",
+    },
+    "https://www.googleapis.com/auth/drive.file": {
+      label: "Create & edit files",
+      description: "Create and edit files in your Google Drive",
+    },
+  },
+  gmail: {
+    "https://www.googleapis.com/auth/gmail.readonly": {
+      label: "Read emails",
+      description: "Read your Gmail messages",
+    },
+    "https://www.googleapis.com/auth/gmail.send": {
+      label: "Send emails",
+      description: "Send emails on your behalf",
+    },
+    "https://www.googleapis.com/auth/gmail.modify": {
+      label: "Modify emails",
+      description: "Modify and manage your emails",
+    },
+  },
+  google_calendar: {
+    "https://www.googleapis.com/auth/calendar.readonly": {
+      label: "View calendar",
+      description: "Read your Google Calendar events",
+    },
+    "https://www.googleapis.com/auth/calendar.events": {
+      label: "Manage events",
+      description: "Create and modify calendar events",
+    },
+  },
+  x: {
+    "tweet.read": {
+      label: "Read tweets",
+      description: "Read your X (Twitter) timeline",
+    },
+    "tweet.write": {
+      label: "Post tweets",
+      description: "Post tweets on your behalf",
+    },
+    "users.read": {
+      label: "View profile",
+      description: "View your X profile information",
+    },
+    "offline.access": {
+      label: "Offline access",
+      description: "Maintain access when you're not using the app",
+    },
+  },
+};
+
+export interface FetchOptions extends RequestInit {
   headers?: Record<string, string>;
 }
 
@@ -86,8 +163,10 @@ export class LandingPageAuthService {
 
       const data = await res.json();
 
-      if (data.session?.access_token) await this.storeToken(data.session.access_token);
-      if (data.session?.refresh_token) await this.storeRefreshToken(data.session.refresh_token);
+      if (data.session?.access_token)
+        await this.storeToken(data.session.access_token);
+      if (data.session?.refresh_token)
+        await this.storeRefreshToken(data.session.refresh_token);
       if (data.session?.expires_at) {
         this.tokenExpiry = data.session.expires_at * 1000;
         localStorage.setItem("token_expiry", this.tokenExpiry.toString());
@@ -117,15 +196,26 @@ export class LandingPageAuthService {
     this.refreshToken = null;
     this.tokenExpiry = null;
 
-    ["supabase_access_token", "supabase_refresh_token", "authToken", "token_expiry", "user", "user_id", "email"].forEach(
-      (key) => localStorage.removeItem(key)
-    );
+    [
+      "supabase_access_token",
+      "supabase_refresh_token",
+      "authToken",
+      "token_expiry",
+      "user",
+      "user_id",
+      "email",
+    ].forEach((key) => localStorage.removeItem(key));
 
-    document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = "supabase_access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "supabase_access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   }
 
-  async makeAuthenticatedRequest(url: string, options: FetchOptions = {}): Promise<Response> {
+  async makeAuthenticatedRequest(
+    url: string,
+    options: FetchOptions = {}
+  ): Promise<Response> {
     let token = await this.getAccessToken();
     if (!token) throw new Error("No authentication token found");
 
@@ -142,7 +232,10 @@ export class LandingPageAuthService {
       if (refreshed) {
         token = await this.getAccessToken();
         if (token) {
-          response = await fetch(url, { ...options, headers: { ...headers, Authorization: `Bearer ${token}` } });
+          response = await fetch(url, {
+            ...options,
+            headers: { ...headers, Authorization: `Bearer ${token}` },
+          });
         } else {
           throw new Error("Failed to get new token after refresh");
         }
@@ -165,9 +258,6 @@ export class LandingPageAuthService {
 
   private handleAuthenticationFailure() {
     this.clearStoredTokens();
-    // optional: call navigation updater if available
-    // if (typeof updateNavigation === "function") updateNavigation();
-
     const path = window.location.pathname;
     if (path.includes("/pricing") || path.includes("/account")) {
       localStorage.setItem("intendedPlan", "");
@@ -196,3 +286,20 @@ export class LandingPageAuthService {
 }
 
 export const authService = new LandingPageAuthService();
+
+// Helper functions for AccountClient
+export async function fetchWithAuth(
+  endpoint: string,
+  options: FetchOptions = {}
+): Promise<Response> {
+  const fullUrl = endpoint.startsWith("http")
+    ? endpoint
+    : `${SLESH_ENDPOINT}${endpoint}`;
+  return authService.makeAuthenticatedRequest(fullUrl, options);
+}
+
+export async function signOut(): Promise<void> {
+  await authService.signOut();
+  window.location.href = "/";
+}
+
